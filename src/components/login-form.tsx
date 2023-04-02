@@ -2,7 +2,7 @@ import React from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import styles from '@/components/login-form.module.css';
+//import '../components/login-form.module.css';
 
 
 interface LoginFormInputs {
@@ -15,10 +15,6 @@ const schema = yup.object().shape({
   password: yup.string().required(),
 });
 
-//register waala variable email and password kay input tag mein mein 
-//ref = {register} karkay use ho raha tha but for
-//some reason error aaraha tha, menay koshish ki resolve karnay ki but nahi hua. 
-//Please look into it.
 const LoginForm: React.FC = () => {
   const {
     register,
@@ -33,18 +29,18 @@ const LoginForm: React.FC = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="login-form">
-      <div>
-        <label htmlFor="email" className="form-label">Email:</label>
-        <input type="email" id="email" placeholder="abc@xyz.com" {...register("email")}/>
-        {errors.email && <span>{errors.email.message}</span>}
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col w-80 p-6 bg-gray-100 rounded-lg shadow-md">
+      <div className="mb-4">
+        <label htmlFor="email" className="block mb-2 font-bold text-gray-700">Email:</label>
+        <input type="email" id="email" placeholder="abc@xyz.com" {...register("email")} className="w-full px-3 py-2 text-gray-700 border rounded-md focus:outline-none focus:border-indigo-500"/>
+        {errors.email && <span className="text-red-500">{errors.email.message}</span>}
       </div>
-      <div>
-        <label htmlFor="password" className="form-label">Password:</label>
-        <input type="password" id="password" placeholder="password" {...register("password")} />
-        {errors.password && <span>{errors.password.message}</span>}
+      <div className="mb-4">
+        <label htmlFor="password" className="block mb-2 font-bold text-gray-700">Password:</label>
+        <input type="password" id="password" placeholder="password" {...register("password")} className="w-full px-3 py-2 text-gray-700 border rounded-md focus:outline-none focus:border-indigo-500"/>
+        {errors.password && <span className="text-red-500">{errors.password.message}</span>}
       </div>
-      <button type="submit">Login</button>
+      <button type="submit" className="py-2 px-4 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600">Login</button>
     </form>
   );
   

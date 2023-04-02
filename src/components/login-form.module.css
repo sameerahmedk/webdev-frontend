@@ -1,3 +1,5 @@
+/* The file does no work after the use of tailwind CSS */
+
 .login-form {
     display: flex;
     flex-direction: column;

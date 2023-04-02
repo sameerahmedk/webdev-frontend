@@ -1,4 +1,4 @@
-import styles from '@/styles/Home.module.css';
+//import styles from '@/styles/Home.module.css';
 import { Inter } from 'next/font/google';
 import Head from 'next/head';
 import LoginForm from '@/components/login-form';
@@ -24,7 +24,7 @@ export default function Home() {
 					href='/favicon.ico'
 				/>
 			</Head>
-			<main>
+			<main className="flex items-center justify-center h-screen">
 			<LoginForm/>
 				{/* <div>
 					<h1>Hello!</h1>
