@@ -2,7 +2,7 @@ import React from "react";
 import { useForm, UseFormReturn } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import styles from '@/components/login-form.module.css';
+import styles from './login-form.module.css';
 
 
 interface LoginFormInputs {
@@ -35,12 +35,12 @@ const LoginForm: React.FC = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="login-form">
       <div>
-        <label htmlFor="email" className="form-label">Email:</label>
+        <label htmlFor="email" className={styles.label}>Email:</label>
         <input type="email" id="email" placeholder="abc@xyz.com" {...register("email")}/>
         {errors.email && <span>{errors.email.message}</span>}
       </div>
       <div>
-        <label htmlFor="password" className="form-label">Password:</label>
+        <label htmlFor="password" className="styles.form-label">Password:</label>
         <input type="password" id="password" placeholder="password" {...register("password")} />
         {errors.password && <span>{errors.password.message}</span>}
       </div>
