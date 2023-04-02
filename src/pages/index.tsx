@@ -26,6 +26,7 @@ export default function Home() {
 			</Head>
 			<main className='flex items-center justify-center h-screen bg-container bg-no-repeat bg-cover bg-center bg-fixed '>
 				<div className=''>
+					{/* <LoginForm /> */}
 					<LoginForm />
 				</div>
 			</main>
