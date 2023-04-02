@@ -1,6 +1,8 @@
 import styles from '@/styles/Home.module.css';
 import { Inter } from 'next/font/google';
 import Head from 'next/head';
+import LoginForm from '@/components/login-form';
+
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -23,9 +25,10 @@ export default function Home() {
 				/>
 			</Head>
 			<main>
-				<div>
+			<LoginForm/>
+				{/* <div>
 					<h1>Hello!</h1>
-				</div>
+				</div> */}
 			</main>
 		</>
 	);
