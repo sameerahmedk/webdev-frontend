@@ -15,6 +15,10 @@ const schema = yup.object().shape({
   password: yup.string().required(),
 });
 
+//register waala variable email and password kay input tag mein mein 
+//ref = {register} karkay use ho raha tha but for
+//some reason error aaraha tha, menay koshish ki resolve karnay ki but nahi hua. 
+//Please look into it.
 const LoginForm: React.FC = () => {
   const {
     register,
