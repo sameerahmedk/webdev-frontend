@@ -3,7 +3,7 @@ import { useForm, UseFormReturn } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 //import '../components/login-form.module.css';
-
+import axios from 'axios';
 
 interface LoginFormInputs {
   email: string;
@@ -26,6 +26,24 @@ const LoginForm: React.FC = () => {
 
   const onSubmit = (data: LoginFormInputs) => {
     console.log(data);
+    axios
+    .post('http://localhost:8080/auth/login', {
+      email: data.email,
+      password: data.password,
+    },
+    {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+    )
+    .then(res => {
+      console.log('res', res.data);
+    })
+    .catch(err => {
+      console.log('error in request', err);
+      console.log();
+    });
   };
 
   return (
