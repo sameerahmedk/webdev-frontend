@@ -1,6 +1,8 @@
-import styles from '@/styles/Home.module.css';
+//import styles from '@/styles/Home.module.css';
 import { Inter } from 'next/font/google';
 import Head from 'next/head';
+import LoginForm from '@/components/login-form';
+import Image from 'next/image';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -22,9 +24,10 @@ export default function Home() {
 					href='/favicon.ico'
 				/>
 			</Head>
-			<main>
-				<div>
-					<h1>Hello!</h1>
+			<main className='flex items-center justify-center h-screen bg-container bg-no-repeat bg-cover bg-center bg-fixed '>
+				<div className=''>
+					{/* <LoginForm /> */}
+					<LoginForm />
 				</div>
 			</main>
 		</>
