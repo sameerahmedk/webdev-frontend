@@ -5,6 +5,7 @@ import * as yup from "yup";
 //import '../components/login-form.module.css';
 import axios from 'axios';
 const jsonwebtoken = require('jsonwebtoken');
+import Cookies from "js-cookie";
 import {sign} from 'jsonwebtoken';
 
 //import { serialize } from "cookies";
@@ -52,23 +53,9 @@ const LoginForm: React.FC = () => {
 .then(res => {
       console.log('res', res.data);
       console.log(res.data["accessToken"]);
-      //Cookie.set("OurSiteJWT", res.data["accessToken"]);
-      //const token = sign(res.data["accessToken"], 'secret');
-
-      //console.log(sign(res.data["accessToken"], 'secret'));
-      const serialised= serialize("OurSiteJWT",res.data,{
-        maxAge: 60 * 60 * 24 * 7, // 1 week
-        path: "/",
-        httpOnly: true,
-        sameSite: "strict",
-        secure: true,
-      });
-     // res.setHeader("Set-Cookie", serialised);
-     //console.log(serialised);
-     res.headers["Set-Cookie"] = serialised;
-      //console.log(res.headers["Set-Cookie"]);
-      document.cookie = serialised;
-      
+      Cookies.set("AccessToken", res.data["accessToken"], { expires: 7 });
+      Cookies.set("RefreshToken", res.data["refreshToken"]), { expires: 30 }; 
+      console.log(Cookies);  
     })
     .catch(err => {
       console.log('error in request', err);
