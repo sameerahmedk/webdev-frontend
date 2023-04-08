@@ -19,7 +19,12 @@ interface LoginFormInputs {
 
 const schema = yup.object().shape({
   email: yup.string().email().required(),
-  password: yup.string().required(),
+  //password: yup.string().required(), 
+  //backend mein bhi validation daalni hai pwd kay liye
+  password: yup.string()
+  .required('No password provided.') 
+  .min(8, 'Password is too short - should be 8 chars minimum.')
+  .matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/, 'Password invalid.')
 });
 
 const LoginForm: React.FC = () => {
