@@ -1,9 +1,6 @@
 //import styles from '@/styles/Home.module.css';
 import { Inter } from 'next/font/google';
 import Head from 'next/head';
-import LoginForm from '@/components/login-form';
-import Image from 'next/image';
-import ProductListing from '@/components/Products/product-listing';
 const inter = Inter({ subsets: ['latin'] });
 
 export default function Home() {
@@ -24,12 +21,12 @@ export default function Home() {
 					href='/favicon.ico'
 				/>
 			</Head>
-			<main className='flex items-center justify-center h-screen bg-container bg-no-repeat bg-cover bg-center bg-fixed '>
-				<div className=''>
-					{/* <LoginForm /> */}
-					{/* <LoginForm /> */}
-					<ProductListing />
-				</div>
+			<main>
+				<h1>Welcome to B2B Marketplace!</h1>
+				{/* <div className=''> */}
+				{/* <LoginForm /> */}
+				{/* <ProductListing /> */}
+				{/* </div> */}
 			</main>
 		</>
 	);
