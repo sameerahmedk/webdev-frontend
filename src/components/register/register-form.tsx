@@ -5,11 +5,10 @@ import {
 	UseFormReturn,
 } from 'react-hook-form';
 import * as yup from 'yup';
-//import '../components/login-form.module.css';
 import axios from 'axios';
 import Cookies from 'js-cookie';
 const jsonwebtoken = require('jsonwebtoken');
-interface LoginFormInputs {
+interface RegisterFormInputs {
 	email: string;
 	password: string;
 }
@@ -19,22 +18,22 @@ const schema = yup.object().shape({
 	password: yup.string().required(),
 });
 
-const LoginForm: React.FC = () => {
+const RegisterForm: React.FC = () => {
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
-	}: UseFormReturn<LoginFormInputs> = useForm<LoginFormInputs>(
+	}: UseFormReturn<RegisterFormInputs> = useForm<RegisterFormInputs>(
 		{
 			resolver: yupResolver(schema),
 		}
 	);
 
-	const onSubmit = (data: LoginFormInputs) => {
+	const onSubmit = (data: RegisterFormInputs) => {
 		console.log(data);
 		axios
 			.post(
-				'http://localhost:8080/auth/login',
+				'http://localhost:8080/auth/register',
 				{
 					email: data.email,
 					password: data.password,
@@ -115,10 +114,10 @@ const LoginForm: React.FC = () => {
 				type='submit'
 				className='py-2 px-4 bg-indigo-500 text-white rounded-md hover:bg-indigo-600 focus:outline-none focus:bg-indigo-600'
 			>
-				Login
+				Register
 			</button>
 		</form>
 	);
 };
 
-export default LoginForm;
+export default RegisterForm;

@@ -1,36 +1,18 @@
-import Buttonreact from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
-import {Row,Col, Button} from 'react-bootstrap';
+import RegisterForm from '@/components/register/register-form';
+import Head from 'next/head';
+import React from 'react';
 
-function FormExample() {
-  return (
-    
-    <Form>
-        <Row>  
-<Col> 
-      <Form.Group className="mb-3" controlId="formBasicEmail">
-        <Form.Label>Email address</Form.Label>
-        <Form.Control type="email" placeholder="Enter email" />
-        <Form.Text className="text-muted">
-          We'll never share your email with anyone else.
-        </Form.Text>
-      </Form.Group>
-</Col>
-<Col>   <Form.Group className="mb-3" controlId="formBasicPassword">
-        <Form.Label>Password</Form.Label>
-        <Form.Control type="password" placeholder="Password" />
-      </Form.Group>
-      <Form.Group className="mb-3" controlId="formBasicCheckbox">
-        <Form.Check type="checkbox" label="Check me out" />
-      </Form.Group>
-      <Button variant="primary" type="submit">
-        Submit
-      </Button>
-      </Col>
-         </Row>
-
-    </Form>
-  );
+function register() {
+	return (
+		<>
+			<Head>
+				<title>Register</title>
+			</Head>
+			<div className='flex items-center justify-center h-screen bg-container bg-no-repeat bg-cover bg-center bg-fixed'>
+				<RegisterForm />
+			</div>
+		</>
+	);
 }
 
-export default FormExample;
+export default register;
