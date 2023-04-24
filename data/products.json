@@ -1,0 +1,74 @@
+[
+	{
+		"_id": "64468247407f6aaf0900bf51",
+		"supplier": "64467485509eab07aa3b0e2d",
+		"name": "Apple iPhone 13 Pro",
+		"description": "The latest and greatest iPhone from Apple, with improved camera and display",
+		"unitPrice": 999.99,
+		"category": "Electronics",
+		"brand": "Apple",
+		"quantity": 50,
+		"image": "https://www.apple.com/newsroom/images/product/iphone/standard/Apple_iPhone-13-Pro_iPhone-13-Pro-Max_09142021_inline.jpg.large_2x.jpg",
+		"__v": 0
+	},
+	{
+		"_id": "644684a44d5f527dce8b2dcd",
+		"supplier": "60d64c890844d040e97c7b2f",
+		"name": "Samsung Galaxy S21 Ultra",
+		"description": "A high-end Android phone with a large, vibrant screen and 5G capabilities",
+		"unitPrice": 1199.99,
+		"category": "Electronics",
+		"brand": "Samsung",
+		"quantity": 20,
+		"image": "https://images.samsung.com/pk/smartphones/galaxy-s21/buy/s21_ultra_basicgroup_kv_pc_img.jpg",
+		"__v": 0
+	},
+	{
+		"_id": "644685c34d5f527dce8b2dcf",
+		"supplier": "60d64c890844d040e97c7b2f",
+		"name": "Google Pixel 6 Pro",
+		"description": "A flagship Android phone with an impressive camera system and sleek design",
+		"unitPrice": 1099.99,
+		"category": "Electronics",
+		"brand": "Google",
+		"quantity": 30,
+		"image": "https://fdn.gsmarena.com/imgroot/news/21/10/google-pixel-6-6-pro-official/-207/gsmarena_006.jpg",
+		"__v": 0
+	},
+	{
+		"_id": "644686624d5f527dce8b2dd1",
+		"supplier": "60d64c890844d040e97c7b2f",
+		"name": "Mosquito Repellent Bracelet",
+		"description": "A natural mosquito repellent bracelet made of essential oils that repels mosquitoes for up to 250 hours",
+		"unitPrice": 9.99,
+		"category": "Outdoor & Camping",
+		"brand": "Mosquito Guard",
+		"quantity": 50,
+		"image": "https://m.media-amazon.com/images/S/aplus-media-library-service-media/cc992628-23ea-4c89-b49d-66e6e7158721.__CR0,0,970,600_PT0_SX970_V1___.jpg",
+		"__v": 0
+	},
+	{
+		"_id": "644688d34d5f527dce8b2dd3",
+		"supplier": "60d64c890844d040e97c7b2f",
+		"name": "Dark Chocolate Bar",
+		"description": "A rich and decadent dark chocolate bar with 70% cocoa",
+		"unitPrice": 3.49,
+		"category": "Food",
+		"brand": "Lindt",
+		"quantity": 200,
+		"image": "https://media.naheed.pk/catalog/product/cache/49dcd5d85f0fa4d590e132d0368d8132/1/0/1028622-1.jpg",
+		"__v": 0
+	},
+	{
+		"_id": "644689fe4d5f527dce8b2dd5",
+		"supplier": "60d64c890844d040e97c7b2f",
+		"name": "The North Face Terra 65 Backpack",
+		"description": "A high-performance backpack for long hikes and backpacking trips, featuring a durable design and adjustable suspension system",
+		"unitPrice": 199.99,
+		"category": "Outdoor and Camping",
+		"brand": "The North Face",
+		"quantity": 85,
+		"image": "https://m.media-amazon.com/images/I/815o4JhgzcL._AC_UL1500_.jpg",
+		"__v": 0
+	}
+]
