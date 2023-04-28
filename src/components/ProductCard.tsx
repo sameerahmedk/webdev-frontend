@@ -34,7 +34,7 @@ const ProductCard = ({ data: p }: ProductCardProps) => {
         </div>
         <div className="mt-4">
           <h2 className="text-base md:text-lg font-semibold text-gray-800">{p.name}</h2>
-          <p className="text-sm md:text-base font-medium text-gray-500 mt-2">{p.description}</p>
+          {/* <p className="text-sm md:text-base font-medium text-gray-500 mt-2">{p.description}</p> */}
           <div className="mt-2 flex justify-between items-center">
             <p className="text-base md:text-lg font-medium text-gray-800">
               {(p.unitPrice)}$

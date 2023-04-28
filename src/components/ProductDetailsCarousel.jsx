@@ -11,13 +11,13 @@ const ProductDetailsCarousel = ({ images }) => {
         showStatus={false}
         thumbWidth={60}
         className="productCarousel">
-        {images?.map(img => (
+        {
           <img
-            key={img.id}
-            src={img.attributes.url}
-            alt={img.attributes.name}
+            // key={images.id}
+            src={images}
+            // alt={images.}
           />
-        ))}
+        }
         {/* <img src="/p2.png" />
                 <img src="/p3.png" />
                 <img src="/p4.png" />

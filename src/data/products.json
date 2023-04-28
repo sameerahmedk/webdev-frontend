@@ -27,7 +27,8 @@
     "_id": "644684a44d5f527dce8b2dcd",
     "supplier": "60d64c890844d040e97c7b2f",
     "name": "Samsung Galaxy S21 Ultra",
-    "description": "A high-end Android phone with a large, vibrant screen and 5G capabilities",
+    "description": "Display: The phone features a 6.8-inch Dynamic AMOLED 2X display with a resolution of 3200 x 1440 pixels and a 120Hz refresh rate. It also supports HDR10+ and has an in-display fingerprint sensor. Processor: The S21 Ultra is powered by Samsung's own Exynos 2100 or Qualcomm Snapdragon 888 processor, depending on the region. Memory and storage: The phone comes with 12GB or 16GB of RAM, and 128GB, 256GB, or 512GB of storage. It does not support expandable storage.Camera: The phone features a quad-camera setup on the back, including a 108-megapixel primary sensor, a 12-megapixel ultra-wide lens, and two 10-megapixel telephoto lenses with 3x and 10x optical zoom. On the front, there's a 40-megapixel selfie camera. Battery: The phone has a 5,000mAh battery with fast charging and wireless charging capabilities. It also supports reverse wireless charging. Other features: The S21 Ultra runs on Android 11 with Samsung's One UI 3.1 on top. It is IP68 water and dust resistant and supports 5G connectivity."
+    ,
     "unitPrice": 1199.99,
     "category": "Electronics",
     "brand": "Samsung",
@@ -154,12 +155,12 @@
     "quantity": 1500,
     "discount": [
       {
-        "quantity": 100,
+        "quantity": 200,
         "percentage": 5,
         "_id": "6446aa5629513744e42d17d0"
       },
       {
-        "quantity": 200,
+        "quantity": 500,
         "percentage": 10,
         "_id": "6446aa5629513744e42d17d1"
       }

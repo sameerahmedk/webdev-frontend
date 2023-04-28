@@ -4,7 +4,7 @@ import Carousel from 'react-multi-carousel'
 import 'react-multi-carousel/lib/styles.css'
 import ProductCard from './ProductCard'
 
-const RelatedProducts = ({ products }) => {
+const RelatedProducts = ({ products, product_uid }) => {
   const responsive = {
     desktop: {
       breakpoint: { max: 3000, min: 1024 },
@@ -24,12 +24,17 @@ const RelatedProducts = ({ products }) => {
     <div className="mt-[50px] md:mt-[100px] mb-[100px] md:mb-0">
       <div className="text-2xl font-bold mb-5">You Might Also Like</div>
       <Carousel
-        responsive={responsive}
+        responsive={ responsive }
         containerClass="-mx-[10px]"
         itemClass="px-[10px]">
-        {products?.data?.map(product => (
-          <ProductCard key={product?.id} data={product} />
-        ))}
+          {products?.map(product => {
+        if (product._id != product_uid.toString()) {
+          // console.log(product_uid);
+          // console.log(product._id);
+          return <ProductCard data={product} />;
+        }
+        return null;
+      })}
       </Carousel>
     </div>
   )
