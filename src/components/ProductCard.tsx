@@ -1,7 +1,9 @@
 import { getDiscountedPricePercentage } from '@/utils/discountPercentage'
 import Link from 'next/link'
 import React from 'react'
-
+import Card from 'react-bootstrap/Card';
+import Button from 'react-bootstrap/Button';
+import Image from 'next/image'
 interface ProductCardProps {
   data: {
     _id: string
@@ -22,30 +24,36 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ data: p }: ProductCardProps) => {
-  return (
-    <Link
-      href={`/product/${p._id}`}
-      className="transform overflow-hidden bg-white duration-200 hover:scale-105 cursor-pointer">
-      <img width={300} src={p.image} alt={p.name} />
-      <div className="p-4 text-black/[0.9]">
-        <h2 className="text-lg font-medium">{p.name}</h2>
-        <div className="flex items-center text-black/[0.5]">
-          <p className="mr-2 text-lg font-semibold">${p.unitPrice}</p>
+  const hasDiscount = p.discount && p.discount.length > 0
 
-       {/*    {p.unitPrice ? (
-            <>
-              <p className="text-base  font-medium line-through">
-                ${p.unitPrice}
-              </p>
-              <p className="ml-auto text-base font-medium text-green-500">
-                {getDiscountedPricePercentage(0, p.discount)}% off
-              </p>
-            </>
-          ) : null} */}
+  return (
+    <Link href={`/product/${p._id}`} passHref>
+      <div className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg cursor-pointer transition-shadow">
+        <div className="w-full h-40 relative overflow-hidden">
+          <Image src={p.image} alt={p.name} layout="fill" objectFit="cover" />
+        </div>
+        <div className="mt-4">
+          <h2 className="text-base md:text-lg font-semibold text-gray-800">{p.name}</h2>
+          <p className="text-sm md:text-base font-medium text-gray-500 mt-2">{p.description}</p>
+          <div className="mt-2 flex justify-between items-center">
+            <p className="text-base md:text-lg font-medium text-gray-800">
+              {(p.unitPrice)}$
+            </p>
+            {hasDiscount && (
+              <div className="text-sm text-green-500 font-medium">
+                {p.discount!.map((d) => (
+                  <div key={d._id}>
+                    {d.quantity}+ items - {d.percentage}% off
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </Link>
   )
 }
+
 
 export default ProductCard

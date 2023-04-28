@@ -166,5 +166,29 @@
     ],
     "image": "https://cdn-5c84bc36-b681cbc1.mysagestore.com/b522fd52e101edc926c3308c230445d5/contents/1A1104/thumbnail/big_1A1104.jpg",
     "__v": 0
+  },
+  {
+    "_id": "64468247407f6aaf0900bf52",
+    "supplier": "64467485509eab07aa3b0e2d",
+    "name": "Sample Image",
+    "description": "The latest and greatest iPhone from Apple, with improved camera and display",
+    "unitPrice": 999.99,
+    "category": "Electronics",
+    "brand": "Apple",
+    "quantity": 50,
+    "discount": [
+      {
+        "quantity": 100,
+        "percentage": 5,
+        "_id": "6446aa5629513744e42d17d0"
+      },
+      {
+        "quantity": 200,
+        "percentage": 10,
+        "_id": "6446aa5629513744e42d17d1"
+      }
+    ],
+    "image": "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg",
+    "__v": 0
   }
 ]
