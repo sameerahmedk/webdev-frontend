@@ -12,13 +12,11 @@ interface ProductCardProps {
     category: string
     brand: string
     quantity: number
-    discount: [
-      {
-        quantity: number
-        percentage: number
-        _id: string
-      }
-    ]
+    discount: {
+      quantity: number;
+      percentage: number;
+      _id: string;
+  }[]
     image: string
   }
 }

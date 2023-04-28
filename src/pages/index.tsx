@@ -1,9 +1,10 @@
 import HeroBanner from '@/components/HeroBanner'
-import ProductCard, { Product } from '@/components/ProductCard'
+//import ProductCard, { Product } from '@/components/ProductCard'
 import Wrapper from '@/components/Wrapper'
 import { Inter } from 'next/font/google'
 import Head from 'next/head'
 import products from '@/data/products.json'
+import ProductCard from '@/components/ProductCard'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -21,7 +22,7 @@ export default function Home() {
       </Head>
       <main>
         <HeroBanner />
-        <Wrapper>
+        <Wrapper className={"Wrapper"}>
           {/* heading and paragaph start */}
           <div className="text-center max-w-[800px] mx-auto my-[50px] md:my-[80px]">
             <div className="text-[28px] md:text-[34px] mb-5 font-semibold leading-tight">
