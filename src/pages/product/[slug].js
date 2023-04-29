@@ -21,10 +21,29 @@ import "react-toastify/dist/ReactToastify.css";
 const ProductDetails = ({ product, products }) => {
     //const [selectedSize, setSelectedSize] = useState();
     const [showError, setShowError] = useState(false);
+
     //const dispatch = useDispatch();
     const p = product;
     //const prod=productsData;
     //console.log(products);
+
+    const [quantity, setQuantity] = useState(1);
+
+    const handleQuantityChange = (event) => {
+      const newQuantity = parseInt(event.target.value, 10);
+      if (!isNaN(newQuantity)) {
+        setQuantity(newQuantity);
+      }
+    };
+
+    
+  const handleIncreaseClick = () => {
+    setQuantity((prevQuantity) => prevQuantity + 1);
+  };
+
+  const handleDecreaseClick = () => {
+    setQuantity((prevQuantity) => Math.max(prevQuantity - 1, 1));
+  };
     const notify = () => {
         toast.success("Success. Check your cart!", {
             position: "bottom-right",
@@ -140,6 +159,31 @@ const ProductDetails = ({ product, products }) => {
                         {/* </div> */}
                         {/* PRODUCT SIZE RANGE END */}
 
+                        {/* Product Quantity button */}
+                     <div className="flex items-center mb-4">
+                        <span className="mr-4">Quantity:</span>
+                        <div className="flex items-center">
+                            <button
+                            className="px-2 py-1 bg-gray-200 border rounded-l"
+                            onClick={handleDecreaseClick}
+                            >
+                            -
+                            </button>
+                            <input
+                            type="number"
+                            min="1"
+                            value={quantity}
+                            onChange={handleQuantityChange}
+                            className="px-2 py-1 border text-center"
+                            />
+                            <button
+                            className="px-2 py-1 bg-gray-200 border rounded-r"
+                            onClick={handleIncreaseClick}
+                            >
+                            +
+                            </button>
+                        </div>
+                        </div>
                         {/* ADD TO CART BUTTON START */}
                         <button
                             className="w-full py-4 rounded-full bg-black text-white text-lg font-medium transition-transform active:scale-95 mb-3 hover:opacity-75"
