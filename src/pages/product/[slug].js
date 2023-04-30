@@ -10,7 +10,7 @@ import ReactMarkdown from "react-markdown";
 import { useSelector, useDispatch } from "react-redux";
 //import { addToCart } from "@/store/cartSlice";
 
-import { addToCart } from "../../../store/cartSlice";
+import { addToCart } from "@/store/cartSlice";
 
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -27,14 +27,50 @@ const ProductDetails = ({ product, products }) => {
     //const prod=productsData;
     //console.log(products);
 
+    const [price, setPrice] = useState(p.unitPrice);
+    const [discountedPrice, setDiscountedPrice] = useState(p.unitPrice);
     const [quantity, setQuantity] = useState(1);
-
+    
     const handleQuantityChange = (event) => {
       const newQuantity = parseInt(event.target.value, 10);
       if (!isNaN(newQuantity)) {
         setQuantity(newQuantity);
       }
+      setDiscountedPrice(calculateDiscountedPrice(newQuantity, p.unitPrice, p.discount));
     };
+    const calculateDiscountedPrice = (quantity, price, discounts) => {
+        let discountPercentage = 0;
+      
+        for (const element of discounts) {
+          if (quantity >= element.quantity && element.percentage > discountPercentage) {
+            discountPercentage = element.percentage;
+          }
+        }
+      
+        const discountedPrice = price - (price * (discountPercentage/100));
+        return discountedPrice.toFixed(2);
+      };
+
+
+
+
+
+    // const disc = 0;
+    // const [price, setPrice] = useState(p.unitPrice);
+    // const handlePriceChange = (event, discount) => {
+    //     const newPrice = parseFloat(p.unitPrice);
+    //     const discountedPrice = newPrice - (newPrice * discount);
+    //     setPrice(discountedPrice);
+    // }
+
+    // const [quantity, setQuantity] = useState(1);
+
+    // const handleQuantityChange = (event) => {
+    //   const newQuantity = parseInt(event.target.value, 10);
+    //   if (!isNaN(newQuantity)) {
+    //     setQuantity(newQuantity);
+    //   }
+    // };
 
     
   const handleIncreaseClick = () => {
@@ -83,7 +119,7 @@ const ProductDetails = ({ product, products }) => {
                         {/* PRODUCT PRICE */}
                         <div className="flex items-center">
                             <p className="mr-2 text-lg font-semibold">
-                                ${p.unitPrice}
+                                ${discountedPrice}
                             </p>
                             {p.unitPrice && (
                                 <>
@@ -91,11 +127,7 @@ const ProductDetails = ({ product, products }) => {
                                         ${p.unitPrice}
                                     </p>
                                     <p className="ml-auto text-base font-medium text-green-500">
-                                        {getDiscountedPricePercentage(
-                                            p.unitPrice,
-                                            p.discount
-                                        )}
-                                        % off
+                                    {getDiscountedPricePercentage(quantity, p.discount)}% off
                                     </p>
                                 </>
                             )}
