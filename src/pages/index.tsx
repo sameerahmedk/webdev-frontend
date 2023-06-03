@@ -6,6 +6,9 @@ import Head from 'next/head'
 import products from '@/data/products.json'
 import ProductCard from '@/components/ProductCard'
 
+import home from '@/pages/supplierPortal/home'
+import Link from 'next/link'
+
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
@@ -22,7 +25,7 @@ export default function Home() {
       </Head>
       <main>
         <HeroBanner />
-        <Wrapper className={"Wrapper"}>
+        <Wrapper className={'Wrapper'}>
           {/* heading and paragaph start */}
           <div className="text-center max-w-[800px] mx-auto my-[50px] md:my-[80px]">
             <div className="text-[28px] md:text-[34px] mb-5 font-semibold leading-tight">
@@ -30,6 +33,13 @@ export default function Home() {
             </div>
             <div className="text-md md:text-xl">
               Get all your business needs in one place with the best prices.
+            </div>
+            <div>
+              <Link href={`/supplierPortal/home`} passHref>
+                <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5">
+                  Supplier Portal
+                </button>
+              </Link>
             </div>
           </div>
           {/* heading and paragaph end */}
