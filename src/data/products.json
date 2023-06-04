@@ -20,6 +20,13 @@
         "_id": "6446aa5629513744e42d17d1"
       }
     ],
+    "variations": [
+      {
+        "name": "Storage",
+        "options": ["128GB", "256GB", "512GB", "1TB"],
+        "_id": "6446aa5629513744e42d17d1"
+      }
+    ],
     "image": "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-13-pro.jpg",
     "__v": 0
   },
@@ -27,8 +34,7 @@
     "_id": "644684a44d5f527dce8b2dcd",
     "supplier": "60d64c890844d040e97c7b2f",
     "name": "Samsung Galaxy S21 Ultra",
-    "description": "Display: The phone features a 6.8-inch Dynamic AMOLED 2X display with a resolution of 3200 x 1440 pixels and a 120Hz refresh rate. It also supports HDR10+ and has an in-display fingerprint sensor. Processor: The S21 Ultra is powered by Samsung's own Exynos 2100 or Qualcomm Snapdragon 888 processor, depending on the region. Memory and storage: The phone comes with 12GB or 16GB of RAM, and 128GB, 256GB, or 512GB of storage. It does not support expandable storage.Camera: The phone features a quad-camera setup on the back, including a 108-megapixel primary sensor, a 12-megapixel ultra-wide lens, and two 10-megapixel telephoto lenses with 3x and 10x optical zoom. On the front, there's a 40-megapixel selfie camera. Battery: The phone has a 5,000mAh battery with fast charging and wireless charging capabilities. It also supports reverse wireless charging. Other features: The S21 Ultra runs on Android 11 with Samsung's One UI 3.1 on top. It is IP68 water and dust resistant and supports 5G connectivity."
-    ,
+    "description": "Display: The phone features a 6.8-inch Dynamic AMOLED 2X display with a resolution of 3200 x 1440 pixels and a 120Hz refresh rate. It also supports HDR10+ and has an in-display fingerprint sensor. Processor: The S21 Ultra is powered by Samsung's own Exynos 2100 or Qualcomm Snapdragon 888 processor, depending on the region. Memory and storage: The phone comes with 12GB or 16GB of RAM, and 128GB, 256GB, or 512GB of storage. It does not support expandable storage.Camera: The phone features a quad-camera setup on the back, including a 108-megapixel primary sensor, a 12-megapixel ultra-wide lens, and two 10-megapixel telephoto lenses with 3x and 10x optical zoom. On the front, there's a 40-megapixel selfie camera. Battery: The phone has a 5,000mAh battery with fast charging and wireless charging capabilities. It also supports reverse wireless charging. Other features: The S21 Ultra runs on Android 11 with Samsung's One UI 3.1 on top. It is IP68 water and dust resistant and supports 5G connectivity.",
     "unitPrice": 1199.99,
     "category": "Electronics",
     "brand": "Samsung",
@@ -42,6 +48,13 @@
       {
         "quantity": 200,
         "percentage": 10,
+        "_id": "6446aa5629513744e42d17d1"
+      }
+    ],
+    "variations": [
+      {
+        "name": "Storage",
+        "options": ["128GB", "256GB", "512GB", "1TB"],
         "_id": "6446aa5629513744e42d17d1"
       }
     ],
@@ -69,6 +82,13 @@
         "_id": "6446aa5629513744e42d17d1"
       }
     ],
+    "variations": [
+      {
+        "name": "Storage",
+        "options": ["128GB", "256GB", "512GB", "1TB"],
+        "_id": "6446aa5629513744e42d17d1"
+      }
+    ],
     "image": "https://fdn.gsmarena.com/imgroot/news/21/10/google-pixel-6-6-pro-official/-207/gsmarena_006.jpg",
     "__v": 0
   },
@@ -93,6 +113,13 @@
         "_id": "6446aa5629513744e42d17d1"
       }
     ],
+    "variations": [
+      {
+        "name": "Storage",
+        "options": ["128GB", "256GB", "512GB", "1TB"],
+        "_id": "6446aa5629513744e42d17d1"
+      }
+    ],
     "image": "https://m.media-amazon.com/images/S/aplus-media-library-service-media/cc992628-23ea-4c89-b49d-66e6e7158721.__CR0,0,970,600_PT0_SX970_V1___.jpg",
     "__v": 0
   },
@@ -114,6 +141,13 @@
       {
         "quantity": 200,
         "percentage": 10,
+        "_id": "6446aa5629513744e42d17d1"
+      }
+    ],
+    "variations": [
+      {
+        "name": "Storage",
+        "options": ["128GB", "256GB", "512GB"],
         "_id": "6446aa5629513744e42d17d1"
       }
     ],
@@ -165,6 +199,13 @@
         "_id": "6446aa5629513744e42d17d1"
       }
     ],
+    "variations": [
+      {
+        "name": "Storage",
+        "options": ["128GB", "256GB"],
+        "_id": "6446aa5629513744e42d17d1"
+      }
+    ],
     "image": "https://cdn-5c84bc36-b681cbc1.mysagestore.com/b522fd52e101edc926c3308c230445d5/contents/1A1104/thumbnail/big_1A1104.jpg",
     "__v": 0
   },
@@ -186,6 +227,13 @@
       {
         "quantity": 200,
         "percentage": 10,
+        "_id": "6446aa5629513744e42d17d1"
+      }
+    ],
+    "variations": [
+      {
+        "name": "Color",
+        "options": ["Black", "White", "Red"],
         "_id": "6446aa5629513744e42d17d1"
       }
     ],
