@@ -1,463 +1,236 @@
-import React, { useState } from "react";
-import { IoMdHeartEmpty } from "react-icons/io";
-import Wrapper from "@/components/Wrapper";
-import ProductDetailsCarousel from "@/components/ProductDetailsCarousel";
-import RelatedProducts from "@/components/RelatedProducts";
-import { fetchDataFromApi } from "@/utils/api";
-import products from "@/data/products.json";
-import { getDiscountedPricePercentage } from "@/utils/discountPercentage";
-import ReactMarkdown from "react-markdown";
-import { useSelector, useDispatch } from "react-redux";
-//import { addToCart } from "@/store/cartSlice";
+import Header from '@/components/Header'
+import ProductDetailsCarousel from '@/components/ProductDetailsCarousel'
+import RelatedProducts from '@/components/RelatedProducts'
+import Wrapper from '@/components/Wrapper'
+import { CartItem, addToCart } from '@/store/cartSlice'
+import { RootState } from '@/store/store'
+import { Product, Products } from '@/types/product'
+import { getDiscountedPricePercentage } from '@/utils/discountPercentage'
+import { useMemo, useState } from 'react'
+import { IoMdHeartEmpty } from 'react-icons/io'
+import ReactMarkdown from 'react-markdown'
+import { shallowEqual, useDispatch, useSelector } from 'react-redux'
+import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
-import { addToCart } from "@/store/cartSlice";
+const ProductDetails = ({
+  product,
+  products
+}: {
+  product: Product
+  products: Products
+}): JSX.Element => {
+  const [showError, setShowError] = useState(false)
 
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+  const dispatch = useDispatch()
+  const cartSelector = (state: RootState) => state.cart.cartItems
+  const cart: CartItem = useSelector(cartSelector, shallowEqual)
 
+  const [quantity, setQuantity] = useState(1)
 
+  const calculateDiscountedPrice = (
+    quantity: number,
+    product: Product
+  ): number => {
+    const { unitPrice, discount } = product
+    const discountPercentage = getDiscountedPricePercentage(quantity, discount)
 
+    const discountedPrice = unitPrice - (unitPrice * discountPercentage) / 100
+    return discountedPrice
+  }
 
-const ProductDetails = ({ product, products }) => {
-    //const [selectedSize, setSelectedSize] = useState();
-    const [showError, setShowError] = useState(false);
+  const discountedPrice = useMemo(
+    () => calculateDiscountedPrice(quantity, product),
+    [quantity, product]
+  )
 
-    //const dispatch = useDispatch();
-    const p = product;
-    //const prod=productsData;
-    //console.log(products);
-
-    const [price, setPrice] = useState(p.unitPrice);
-    const [discountedPrice, setDiscountedPrice] = useState(p.unitPrice);
-    const [quantity, setQuantity] = useState(1);
-    
-    const handleQuantityChange = (event) => {
-      const newQuantity = parseInt(event.target.value, 10);
-      if (!isNaN(newQuantity)) {
-        setQuantity(newQuantity);
-      }
-      setDiscountedPrice(calculateDiscountedPrice(newQuantity, p.unitPrice, p.discount));
-    };
-    const calculateDiscountedPrice = (quantity, price, discounts) => {
-        let discountPercentage = 0;
-      
-        for (const element of discounts) {
-          if (quantity >= element.quantity && element.percentage > discountPercentage) {
-            discountPercentage = element.percentage;
-          }
+  const handleAddToCart = () => {
+    dispatch(
+      addToCart({
+        ...product,
+        quantity: quantity,
+        discountedPrice: discountedPrice || product.unitPrice,
+        id: product._id,
+        attributes: {
+          image: product.image,
+          unitPrice: product.unitPrice
         }
-      
-        const discountedPrice = price - (price * (discountPercentage/100));
-        return discountedPrice.toFixed(2);
-      };
+      })
+    )
+    toast.success('Added to cart!', {
+      position: 'top-right',
+      autoClose: 1000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: false,
+      progress: undefined,
+      theme: 'light'
+    })
+  }
 
+  const handleQuantityChange = event => {
+    const newQuantity = parseInt(event.target.value, 10)
+    if (!isNaN(newQuantity)) {
+      setQuantity(newQuantity)
+    }
+  }
 
-
-
-
-    // const disc = 0;
-    // const [price, setPrice] = useState(p.unitPrice);
-    // const handlePriceChange = (event, discount) => {
-    //     const newPrice = parseFloat(p.unitPrice);
-    //     const discountedPrice = newPrice - (newPrice * discount);
-    //     setPrice(discountedPrice);
-    // }
-
-    // const [quantity, setQuantity] = useState(1);
-
-    // const handleQuantityChange = (event) => {
-    //   const newQuantity = parseInt(event.target.value, 10);
-    //   if (!isNaN(newQuantity)) {
-    //     setQuantity(newQuantity);
-    //   }
-    // };
-
-    
   const handleIncreaseClick = () => {
-    setQuantity((prevQuantity) => prevQuantity + 1);
-  };
+    setQuantity(prevQuantity => prevQuantity + 1)
+  }
 
   const handleDecreaseClick = () => {
-    setQuantity((prevQuantity) => Math.max(prevQuantity - 1, 1));
-  };
-    const notify = () => {
-        toast.success("Success. Check your cart!", {
-            position: "bottom-right",
-            autoClose: 5000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
-        });
-    };
+    setQuantity(prevQuantity => Math.max(prevQuantity - 1, 1))
+  }
 
-    return (
-        <div className="w-full md:py-20">
-            <ToastContainer />
-            <Wrapper>
-                <div className="flex flex-col lg:flex-row md:px-10 gap-[50px] lg:gap-[100px]">
-                    {/* left column start */}
-                    <div className="w-full md:w-auto flex-[1.5] max-w-[500px] lg:max-w-full mx-auto lg:mx-0">
-                        <ProductDetailsCarousel images={p.image} />
-                    </div>
-                    {/* left column end */}
+  return (
+    <>
+      <Header />
+      <div className="w-full md:py-20">
+        <ToastContainer />
+        <Wrapper className="">
+          <div className="flex flex-col lg:flex-row md:px-10 gap-[50px] lg:gap-[100px]">
+            {/* left column start */}
+            <div className="w-full md:w-auto flex-[1.5] max-w-[500px] lg:max-w-full mx-auto lg:mx-0">
+              <ProductDetailsCarousel images={product.image} />
+            </div>
+            {/* left column end */}
 
-                    {/* right column start */}
-                    <div className="flex-[1] py-3">
-                        {/* PRODUCT TITLE */}
-                        <div className="text-[34px] font-semibold mb-2 leading-tight">
-                            {p.name}
-                        </div>
+            {/* right column start */}
+            <div className="flex-[1] py-3">
+              {/* PRODUCT TITLE */}
+              <div className="text-[34px] font-semibold mb-2 leading-tight">
+                {product.name}
+              </div>
 
-                        {/* PRODUCT SUBTITLE
+              {/* PRODUCT SUBTITLE
                         <div className="text-lg font-semibold mb-5">
                             {p.subtitle}
                         </div> */}
 
-                        {/* PRODUCT PRICE */}
-                        <div className="flex items-center">
-                            <p className="mr-2 text-lg font-semibold">
-                                ${discountedPrice}
-                            </p>
-                            {p.unitPrice && (
-                                <>
-                                    <p className="text-base  font-medium line-through">
-                                        ${p.unitPrice}
-                                    </p>
-                                    <p className="ml-auto text-base font-medium text-green-500">
-                                    {getDiscountedPricePercentage(quantity, p.discount)}% off
-                                    </p>
-                                </>
-                            )}
-                        </div>
+              {/* PRODUCT PRICE */}
+              <div className="flex items-center">
+                <p className="mr-2 text-lg font-semibold">${discountedPrice}</p>
+                {product.unitPrice && (
+                  <>
+                    <p className="text-base  font-medium line-through">
+                      ${product.unitPrice}
+                    </p>
+                    <p className="ml-auto text-base font-medium text-green-500">
+                      {getDiscountedPricePercentage(quantity, product.discount)}
+                      % off
+                    </p>
+                  </>
+                )}
+              </div>
 
-                        <div className="text-md font-medium text-black/[0.5]">
-                            incl. of taxes
-                        </div>
-                        <div className="text-md font-medium text-black/[0.5] mb-20">
-                            {`(Also includes all applicable duties)`}
-                        </div>
+              <div className="text-md font-medium text-black/[0.5]">
+                incl. of taxes
+              </div>
+              <div className="text-md font-medium text-black/[0.5] mb-20">
+                {`(Also includes all applicable duties)`}
+              </div>
 
-                        {/* PRODUCT SIZE RANGE START */}
-                        {/* <div className="mb-10"> */}
-                            {/* HEADING START */}
-                            {/* <div className="flex justify-between mb-2">
-                                <div className="text-md font-semibold">
-                                    Select Size
-                                </div>
-                                <div className="text-md font-medium text-black/[0.5] cursor-pointer">
-                                    Select Guide
-                                </div>
-                            </div> */}
-                            {/* HEADING END */}
-
-                            {/* SIZE START */}
-                            {/* <div
-                                id="sizesGrid"
-                                className="grid grid-cols-3 gap-2"
-                            >
-                                {p.size.data.map((item, i) => (
-                                    <div
-                                        key={i}
-                                        className={`border rounded-md text-center py-3 font-medium ${
-                                            item.enabled
-                                                ? "hover:border-black cursor-pointer"
-                                                : "cursor-not-allowed bg-black/[0.1] opacity-50"
-                                        } ${
-                                            selectedSize === item.size
-                                                ? "border-black"
-                                                : ""
-                                        }`}
-                                        onClick={() => {
-                                            setSelectedSize(item.size);
-                                            setShowError(false);
-                                        }}
-                                    >
-                                        {item.size}
-                                    </div>
-                                ))}
-                            </div> */}
-                            {/* SIZE END */}
-
-                            {/* SHOW ERROR START */}
-                            {/* {showError && (
-                                <div className="text-red-600 mt-1">
-                                    Size selection is required
-                                </div>
-                            )} */}
-                            {/* SHOW ERROR END */}
-                        {/* </div> */}
-                        {/* PRODUCT SIZE RANGE END */}
-
-                        {/* Product Quantity button */}
-                     <div className="flex items-center mb-4">
-                        <span className="mr-4">Quantity:</span>
-                        <div className="flex items-center">
-                            <button
-                            className="px-2 py-1 bg-gray-200 border rounded-l"
-                            onClick={handleDecreaseClick}
-                            >
-                            -
-                            </button>
-                            <input
-                            type="number"
-                            min="1"
-                            value={quantity}
-                            onChange={handleQuantityChange}
-                            className="px-2 py-1 border text-center"
-                            />
-                            <button
-                            className="px-2 py-1 bg-gray-200 border rounded-r"
-                            onClick={handleIncreaseClick}
-                            >
-                            +
-                            </button>
-                        </div>
-                        </div>
-                        {/* ADD TO CART BUTTON START */}
-                        <button
-                            className="w-full py-4 rounded-full bg-black text-white text-lg font-medium transition-transform active:scale-95 mb-3 hover:opacity-75"
-                            onClick={
-                                () => {
-                                // if (!selectedSize) {
-                                //     setShowError(true);
-                                //     document
-                                //         .getElementById("sizesGrid")
-                                //         .scrollIntoView({
-                                //             block: "center",
-                                //             behavior: "smooth",
-                                //         });
-                                // } else {
-                                //     dispatch(
-                                //         addToCart({
-                                //             ...product?.data?.[0],
-                                //             selectedSize,
-                                //             oneQuantityPrice: p.price,
-                                //         })
-                                //     );
-                                //     notify();
-                                // }
-                            }
-                        }
-                        >
-                            Add to Cart
-                        </button>
-                        {/* ADD TO CART BUTTON END */}
-
-                        {/* WHISHLIST BUTTON START */}
-                        <button className="w-full py-4 rounded-full border border-black text-lg font-medium transition-transform active:scale-95 flex items-center justify-center gap-2 hover:opacity-75 mb-10">
-                            Whishlist
-                            <IoMdHeartEmpty size={20} />
-                        </button>
-                        {/* WHISHLIST BUTTON END */}
-
-                        <div>
-                            <div className="text-lg font-bold mb-5">
-                                Product Details
-                            </div>
-                            <div className="markdown text-md mb-5">
-                                <ReactMarkdown>{p.description}</ReactMarkdown>
-                            </div>
-                        </div>
-                    </div>
-                    {/* right column end */}
+              {/* Product Quantity button */}
+              <div className="flex items-center mb-4">
+                <span className="mr-4">Quantity:</span>
+                <div className="flex items-center">
+                  <button
+                    type="button"
+                    className="px-2 py-1 bg-gray-200 border rounded-l"
+                    onClick={handleDecreaseClick}>
+                    -
+                  </button>
+                  <input
+                    aria-label="quantity"
+                    type="number"
+                    min="1"
+                    value={quantity}
+                    onChange={handleQuantityChange}
+                    className="px-2 py-1 border text-center"
+                  />
+                  <button
+                    type="button"
+                    className="px-2 py-1 bg-gray-200 border rounded-r"
+                    onClick={handleIncreaseClick}>
+                    +
+                  </button>
                 </div>
+              </div>
+              {/* ADD TO CART BUTTON START */}
+              <button
+                type="submit"
+                className="w-full py-4 rounded-full bg-black text-white text-lg font-medium transition-transform active:scale-95 mb-3 hover:opacity-75"
+                onClick={() => {
+                  handleAddToCart()
+                }}>
+                Add to Cart
+              </button>
+              {/* ADD TO CART BUTTON END */}
 
-                <RelatedProducts products={products} product_uid={product._id} />
-            </Wrapper>
-        </div>
-    );
-};
+              {/* WHISHLIST BUTTON START */}
+              <button className="w-full py-4 rounded-full border border-black text-lg font-medium transition-transform active:scale-95 flex items-center justify-center gap-2 hover:opacity-75 mb-10">
+                Whishlist
+                <IoMdHeartEmpty size={20} />
+              </button>
+              {/* WHISHLIST BUTTON END */}
 
-export default ProductDetails;
+              <div>
+                <div className="text-lg font-bold mb-5">Product Details</div>
+                <div className="markdown text-md mb-5">
+                  <ReactMarkdown>{product.description}</ReactMarkdown>
+                </div>
+              </div>
+            </div>
+            {/* right column end */}
+          </div>
 
-// export async function getStaticPaths() {
-//     const products = await fetchDataFromApi("/api/products?populate=*");
-//     const paths = products?.data?.map((p) => ({
-//         params: {
-//             slug: p.attributes.slug,
-//         },
-//     }));
+          <RelatedProducts products={products} product_uid={product._id} />
+        </Wrapper>
+      </div>
+    </>
+  )
+}
 
-//     return {
-//         paths,
-//         fallback: false,
-//     };
-// }
+export default ProductDetails
 
-// export async function getStaticProps({ params: { slug } }) {
-//     const product = await fetchDataFromApi(
-//         `/api/products?populate=*&filters[slug][$eq]=${slug}`
-//     );
-//     const products = await fetchDataFromApi(
-//         `/api/products?populate=*&[filters][slug][$ne]=${slug}`
-//     );
-
-//     return {
-//         props: {
-//             product,
-//             products,
-//         },
-//     };
-// }
-
-
-import fs from 'fs';
-import path from 'path';
-import { useRouter } from 'next/router';
-
-// import React from "react";
-import Image from "next/image";
-
-// const ProductPage = ({ product }) => {
-//     return (
-//       <div className="container mx-auto py-10">
-//         <div className="grid grid-cols-2 gap-4">
-//           <div className="w-full">
-//             <div className="relative h-96">
-//                 <Image
-//     src={product.image}
-//     alt={product.name}
-//     width={500}
-//     height={500}
-//     objectFit="cover"
-//         objectPosition="center"
-//               />
-//             </div>
-//           </div>
-//           <div className="w-full">
-//             <h1 className="text-2xl font-bold mb-2">{product.name}</h1>
-//             <p className="mb-4">{product.description}</p>
-//             <div className="flex mb-4">
-//               <span className="font-bold">Brand:</span>
-//               <span className="ml-2">{product.brand}</span>
-//             </div>
-//             <div className="flex mb-4">
-//               <span className="font-bold">Category:</span>
-//               <span className="ml-2">{product.category}</span>
-//             </div>
-//             <div className="flex mb-4">
-//               <span className="font-bold">Unit Price:</span>
-//               <span className="ml-2">${product.unitPrice}</span>
-//             </div>
-//             <div className="flex mb-4">
-//               <span className="font-bold">Quantity:</span>
-//               <span className="ml-2">{product.quantity}</span>
-//             </div>
-//             {product.discount && (
-//               <div className="flex mb-4">
-//                 <span className="font-bold">Discount:</span>
-//                 <span className="ml-2">
-//                   {product.discount.map((discount) => (
-//                     <div key={discount._id}>
-//                       <span>{discount.quantity}+</span>
-//                       <span className="ml-1">{discount.percentage}% off</span>
-//                     </div>
-//                   ))}
-//                 </span>
-//               </div>
-//             )}
-//           </div>
-//         </div>
-//       </div>
-//     );
-//   };
-  
-//   export default ProductPage;
-// import { useState } from "react";
-// import Image from "next/image";
-
-// const ProductDetailsPage = ({ product }) => {
-//   const [quantity, setQuantity] = useState(1);
-
-//   const handleQuantityChange = (e) => {
-//     setQuantity(e.target.value);
-//   };
-
-//   const handleAddToCart = () => {
-//     // TODO: Add the product to the cart with the selected quantity
-//   };
-
-//   return (
-// //     <div className="container">
-// //       <div className="row">
-// //         <div className="col-lg-6">
-// //           <Image
-// //             src={product.image}
-// //             alt={product.name}
-// //             width={800}
-// //             height={600}
-// //             objectFit="contain"
-// //           />
-// //         </div>
-// //         <div className="col-lg-6">
-// //           <h1>{product.name}</h1>
-// //           <h3>{product.description}</h3>
-// //           <p>Price: ${product.unitPrice.toFixed(2)}</p>
-// //           <div className="form-group">
-// //             <label htmlFor="quantity">Quantity:</label>
-// //             <input
-// //               type="number"
-// //               id="quantity"
-// //               className="form-control"
-// //               min="1"
-// //               max={product.quantity}
-// //               value={quantity}
-// //               onChange={handleQuantityChange}
-// //             />
-// //           </div>
-// //           <button className="btn btn-primary" onClick={handleAddToCart}>
-// //             Add to Cart
-// //           </button>
-// //         </div>
-// //       </div>
-// //       {/* <div className="row">
-// //         <div className="col-lg-12">
-// //           <h2>Key Features:</h2>
-// //           <ul>
-// //             {product.features.map((feature) => (
-// //               <li key={feature}>{feature}</li>
-// //             ))}
-// //           </ul>
-// //         </div>
-// //       </div> */}
-// //     </div>
-// //   );
-
-// };
-
-// export default ProductDetailsPage;
-
+import fs from 'fs'
+import path from 'path'
 
 export async function getStaticPaths() {
-  const productsFilePath = path.join(process.cwd(),'src', 'data', 'products.json');
-  const productsData = fs.readFileSync(productsFilePath);
-  const products = JSON.parse(productsData);
+  const productsFilePath = path.join(
+    process.cwd(),
+    'src',
+    'data',
+    'products.json'
+  )
+  const productsData = fs.readFileSync(productsFilePath).toString()
+  const products = JSON.parse(productsData)
 
   // Generate a list of all product slugs to pre-render
-  const paths = products.map((product) => ({
-    params: { slug: product._id },
-  }));
+  const paths = products.map(product => ({
+    params: { slug: product._id }
+  }))
 
-  return { paths, fallback: false };
+  return { paths, fallback: false }
 }
 
 export async function getStaticProps({ params }) {
-  const productsFilePath = path.join(process.cwd(), 'src','data', 'products.json');
-  const productsData = fs.readFileSync(productsFilePath);
-  const products = JSON.parse(productsData);
-  //console.log(products);
-  // Fetch the product data based on the slug parameter
-  const product = products.find((product) => product._id === params.slug);
-
-//   console.log(product);
+  const productsFilePath = path.join(
+    process.cwd(),
+    'src',
+    'data',
+    'products.json'
+  )
+  const productsData = fs.readFileSync(productsFilePath).toString()
+  const products = JSON.parse(productsData)
+  const product = products.find(product => product._id === params.slug)
 
   return {
     props: {
-        product:product,
-        products:products
-    },
-  };
+      product: product,
+      products: products
+    }
+  }
 }
