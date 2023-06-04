@@ -2,14 +2,13 @@ import Header from '@/components/Header'
 import ProductDetailsCarousel from '@/components/ProductDetailsCarousel'
 import RelatedProducts from '@/components/RelatedProducts'
 import Wrapper from '@/components/Wrapper'
-import { CartItem, addToCart } from '@/store/cartSlice'
-import { RootState } from '@/store/store'
+import { addToCart } from '@/store/cartSlice'
 import { Product, Products } from '@/types/product'
 import { getDiscountedPricePercentage } from '@/utils/discountPercentage'
 import { useMemo, useState } from 'react'
 import { IoMdHeartEmpty } from 'react-icons/io'
 import ReactMarkdown from 'react-markdown'
-import { shallowEqual, useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
@@ -23,9 +22,8 @@ const ProductDetails = ({
   const [showError, setShowError] = useState(false)
 
   const dispatch = useDispatch()
-  const cartSelector = (state: RootState) => state.cart.cartItems
-  const cart: CartItem = useSelector(cartSelector, shallowEqual)
 
+  const [selectedOption, setSelectedOption] = useState('')
   const [quantity, setQuantity] = useState(1)
 
   const calculateDiscountedPrice = (
@@ -69,19 +67,31 @@ const ProductDetails = ({
     })
   }
 
-  const handleQuantityChange = event => {
+  const handleQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newQuantity = parseInt(event.target.value, 10)
-    if (!isNaN(newQuantity)) {
+    if (!isNaN(newQuantity) && newQuantity <= selectedOption.quantity) {
       setQuantity(newQuantity)
     }
   }
 
   const handleIncreaseClick = () => {
-    setQuantity(prevQuantity => prevQuantity + 1)
+    if (quantity < selectedOption.quantity) {
+      setQuantity(prevQuantity => prevQuantity + 1)
+    }
   }
 
   const handleDecreaseClick = () => {
     setQuantity(prevQuantity => Math.max(prevQuantity - 1, 1))
+  }
+
+  const handleOptionClick = (option: string, quantity: number) => {
+    if (quantity > 0) {
+      setSelectedOption({ option, quantity })
+      setQuantity(1) // Reset quantity when changing options
+      setShowError(false)
+    } else {
+      setShowError(true)
+    }
   }
 
   return (
@@ -104,11 +114,6 @@ const ProductDetails = ({
                 {product.name}
               </div>
 
-              {/* PRODUCT SUBTITLE
-                        <div className="text-lg font-semibold mb-5">
-                            {p.subtitle}
-                        </div> */}
-
               {/* PRODUCT PRICE */}
               <div className="flex items-center">
                 <p className="mr-2 text-lg font-semibold">${discountedPrice}</p>
@@ -129,7 +134,43 @@ const ProductDetails = ({
                 incl. of taxes
               </div>
               <div className="text-md font-medium text-black/[0.5] mb-20">
-                {`(Also includes all applicable duties)`}
+                {selectedOption.quantity > 0 &&
+                  `(Also includes all applicable duties)`}
+              </div>
+
+              {/* Product Variations */}
+              <div className="mb-4 flex flex-wrap">
+                {product.variations.length > 0 &&
+                  product.variations[0].options.map(option => (
+                    <div
+                      key={option.option}
+                      className={`flex-auto inline-block mr-2 mb-2 ${
+                        option.option === selectedOption.option
+                          ? 'bg-gray-200'
+                          : 'bg-gray-100'
+                      }`}
+                      onClick={() =>
+                        handleOptionClick(option.option, option.quantity)
+                      }
+                      style={{ cursor: 'pointer' }}>
+                      <div className="p-2 flex items-center">
+                        <button
+                          type="button"
+                          className="px-2 py-1"
+                          disabled={option.quantity <= 0}>
+                          {option.option}
+                        </button>
+                        <p className="text-sm text-gray-500 ml-2">
+                          {option.quantity} available
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                {showError && (
+                  <p className="text-red-500 text-sm mt-2">
+                    Please select a valid option with available quantity.
+                  </p>
+                )}
               </div>
 
               {/* Product Quantity button */}
@@ -139,13 +180,15 @@ const ProductDetails = ({
                   <button
                     type="button"
                     className="px-2 py-1 bg-gray-200 border rounded-l"
-                    onClick={handleDecreaseClick}>
+                    onClick={handleDecreaseClick}
+                    disabled={quantity === 1}>
                     -
                   </button>
                   <input
                     aria-label="quantity"
                     type="number"
                     min="1"
+                    max={selectedOption.quantity}
                     value={quantity}
                     onChange={handleQuantityChange}
                     className="px-2 py-1 border text-center"
@@ -153,25 +196,32 @@ const ProductDetails = ({
                   <button
                     type="button"
                     className="px-2 py-1 bg-gray-200 border rounded-r"
-                    onClick={handleIncreaseClick}>
+                    onClick={handleIncreaseClick}
+                    disabled={quantity >= selectedOption.quantity}>
                     +
+                  </button>
+                  <button
+                    type="button"
+                    className="px-2 py-1 bg-gray-200 border rounded ml-2"
+                    onClick={() => setQuantity(selectedOption.quantity)}>
+                    Max
                   </button>
                 </div>
               </div>
+
               {/* ADD TO CART BUTTON START */}
               <button
                 type="submit"
                 className="w-full py-4 rounded-full bg-black text-white text-lg font-medium transition-transform active:scale-95 mb-3 hover:opacity-75"
-                onClick={() => {
-                  handleAddToCart()
-                }}>
+                onClick={handleAddToCart}
+                disabled={!selectedOption}>
                 Add to Cart
               </button>
               {/* ADD TO CART BUTTON END */}
 
               {/* WHISHLIST BUTTON START */}
               <button className="w-full py-4 rounded-full border border-black text-lg font-medium transition-transform active:scale-95 flex items-center justify-center gap-2 hover:opacity-75 mb-10">
-                Whishlist
+                Wishlist
                 <IoMdHeartEmpty size={20} />
               </button>
               {/* WHISHLIST BUTTON END */}
