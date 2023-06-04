@@ -1,38 +1,39 @@
 import CartItem from '@/components/CartItem'
 import Wrapper from '@/components/Wrapper'
 import { RootState } from '@/store/store'
+import currency from 'currency.js'
 import Image from 'next/image'
 import Link from 'next/link'
 import { useMemo, useState } from 'react'
 import { useSelector } from 'react-redux'
 
-// import { loadStripe } from "@stripe/stripe-js";
-/* const stripePromise = loadStripe(
-    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-); */
-
 const Cart = () => {
   const [loading, setLoading] = useState(false)
   const { cartItems } = useSelector((state: RootState) => state.cart)
-  //   const cartSelector = (state: RootState) => state.cart.cartItems
-  //   const cartItems: CartItem = useSelector(cartSelector, shallowEqual)
 
-  const subDiscountedTotal = useMemo(() => {
-    const _ = cartItems.reduce((total, val) => total + val.discountedPrice, 0)
-    return Number(Math.round(parseFloat(_ + 'e' + 2)) + 'e-' + 2)
+  const discountedSubtotal = useMemo(() => {
+    return currency(
+      cartItems.reduce(
+        (total, val) => total + val.discountedPrice * val.quantity,
+        0
+      ),
+      { increment: 1 }
+    ).format()
   }, [cartItems])
 
-  const subTotal = useMemo(() => {
-    const _ = cartItems.reduce(
-      (total, val) => total + val.attributes.unitPrice,
-      0
-    )
-    return Number(Math.round(parseFloat(_ + 'e' + 2)) + 'e-' + 2)
+  const total = useMemo(() => {
+    return currency(
+      cartItems.reduce(
+        (total, val) => total + val.attributes.unitPrice * val.quantity,
+        0
+      ),
+      { increment: 1 }
+    ).format()
   }, [cartItems])
 
   const discount = useMemo(() => {
-    return (subTotal - subDiscountedTotal).toFixed(2)
-  }, [subTotal, subDiscountedTotal])
+    return currency(total).subtract(discountedSubtotal).format()
+  }, [total, discountedSubtotal])
 
   //   const discountPercentage = useMemo(() => {})
 
@@ -78,40 +79,41 @@ const Cart = () => {
               {/* CART ITEMS END */}
 
               {/* SUMMARY START */}
-              <div className="flex-[1]">
+              <div className="flex flex-col flex-1">
                 <div className="text-lg font-bold">Summary</div>
-
-                <div className="p-5 my-5 bg-black/[0.05] rounded-xl">
-                  <div className="flex justify-between">
-                    <div className="uppercase text-md md:text-lg font-medium text-black">
-                      MRP
-                    </div>
-                    <div className="text-md md:text-lg font-medium text-black">
-                      ${subTotal}
-                    </div>
-                  </div>
-                  <br />
-                  <div className="flex justify-between">
-                    <div className="uppercase text-md md:text-lg font-medium text-black">
-                      Discount
-                    </div>
-                    <div className="text-md md:text-lg font-medium text-black">
-                      ${discount}
-                    </div>
-                  </div>
-                  <br />
-                  <div className="flex justify-between">
-                    <div className="uppercase text-md md:text-lg font-medium text-black">
-                      Subtotal
-                    </div>
-                    <div className="text-md md:text-lg font-medium text-black">
-                      ${subDiscountedTotal}
+                <div className="p-5 my-5 bg-gray-100 rounded-xl">
+                  <div className="flex justify-between mb-4">
+                    <div className="text-md font-medium">MRP</div>
+                    <div className="text-md font-medium">
+                      {currency(discount).value === 0 ? (
+                        `$${total}`
+                      ) : (
+                        <s>{total}</s>
+                      )}
                     </div>
                   </div>
 
-                  <div className="text-sm md:text-md py-5 border-t mt-5">
+                  <div className="flex justify-between mb-4">
+                    <div className="text-md font-medium">Discount</div>
+                    <div
+                      className={`${
+                        currency(discount).value > 0
+                          ? 'text-green-500'
+                          : 'text-gray-500'
+                      } text-md font-medium`}>
+                      -{currency(discount).format()}
+                    </div>
+                  </div>
+
+                  <div className="flex justify-between mb-4">
+                    <div className="text-md font-medium">Subtotal</div>
+                    <div className="text-md font-medium">
+                      {discountedSubtotal}
+                    </div>
+                  </div>
+                  <div className="text-sm py-5 border-t mt-5">
                     The subtotal reflects the total price of your order,
-                    including duties, taxes and applicable discounts.
+                    including duties, taxes, and applicable discounts.
                   </div>
                 </div>
 
