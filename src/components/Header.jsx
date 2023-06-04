@@ -1,15 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import Wrapper from './Wrapper'
 
 import Link from 'next/link'
 import Menu from './Menu'
 import MenuMobile from './MenuMobile'
 
-import { IoMdHeartEmpty } from 'react-icons/io'
-import { BsCart } from 'react-icons/bs'
 import { BiMenuAltRight } from 'react-icons/bi'
+import { BsCart } from 'react-icons/bs'
+import { IoMdHeartEmpty } from 'react-icons/io'
 import { VscChromeClose } from 'react-icons/vsc'
-import { fetchDataFromApi } from '@/utils/api'
 import { useSelector } from 'react-redux'
 
 const Header = () => {
@@ -46,8 +45,8 @@ const Header = () => {
   }, [])
 
   const fetchCategories = async () => {
-    const { data } = await fetchDataFromApi('/api/categories?populate=*')
-    setCategories(data)
+    // const { data } = await fetchDataFromApi('/api/categories?populate=*')
+    // setCategories(data)
   }
 
   return (

@@ -24,17 +24,15 @@ const RelatedProducts = ({ products, product_uid }) => {
     <div className="mt-[50px] md:mt-[100px] mb-[100px] md:mb-0">
       <div className="text-2xl font-bold mb-5">You Might Also Like</div>
       <Carousel
-        responsive={ responsive }
+        responsive={responsive}
         containerClass="-mx-[10px]"
         itemClass="px-[10px]">
-          {products?.map(product => {
-        if (product._id != product_uid.toString()) {
-          // console.log(product_uid);
-          // console.log(product._id);
-          return <ProductCard data={product} />;
-        }
-        return null;
-      })}
+        {products?.map(product => {
+          if (product._id != product_uid.toString()) {
+            return <ProductCard data={product} key={product._id}/>
+          }
+          return null
+        })}
       </Carousel>
     </div>
   )

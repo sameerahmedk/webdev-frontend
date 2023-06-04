@@ -1,9 +1,5 @@
-import { getDiscountedPricePercentage } from '@/utils/discountPercentage'
-import Link from 'next/link'
-import React from 'react'
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
 import Image from 'next/image'
+import Link from 'next/link'
 interface ProductCardProps {
   data: {
     _id: string
@@ -15,10 +11,10 @@ interface ProductCardProps {
     brand: string
     quantity: number
     discount: {
-      quantity: number;
-      percentage: number;
-      _id: string;
-  }[]
+      quantity: number
+      percentage: number
+      _id: string
+    }[]
     image: string
   }
 }
@@ -30,18 +26,28 @@ const ProductCard = ({ data: p }: ProductCardProps) => {
     <Link href={`/product/${p._id}`} passHref>
       <div className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg cursor-pointer transition-shadow">
         <div className="w-full h-40 relative overflow-hidden">
-          <Image src={p.image} alt={p.name} layout="fill" objectFit="cover" />
+          <Image
+            src={p.image}
+            alt={p.name}
+            fill
+            sizes="100vw"
+            style={{
+              objectFit: 'cover'
+            }}
+          />
         </div>
         <div className="mt-4">
-          <h2 className="text-base md:text-lg font-semibold text-gray-800">{p.name}</h2>
+          <h2 className="text-base md:text-lg font-semibold text-gray-800">
+            {p.name}
+          </h2>
           {/* <p className="text-sm md:text-base font-medium text-gray-500 mt-2">{p.description}</p> */}
           <div className="mt-2 flex justify-between items-center">
             <p className="text-base md:text-lg font-medium text-gray-800">
-              {(p.unitPrice)}$
+              {p.unitPrice}$
             </p>
             {hasDiscount && (
               <div className="text-sm text-green-500 font-medium">
-                {p.discount!.map((d) => (
+                {p.discount!.map(d => (
                   <div key={d._id}>
                     {d.quantity}+ items - {d.percentage}% off
                   </div>
@@ -54,6 +60,5 @@ const ProductCard = ({ data: p }: ProductCardProps) => {
     </Link>
   )
 }
-
 
 export default ProductCard
