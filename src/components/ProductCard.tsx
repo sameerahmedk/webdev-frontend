@@ -29,8 +29,8 @@ const ProductCard = ({ data: p }: ProductCardProps) => {
           <Image
             src={p.image}
             alt={p.name}
-            fill
-            sizes="100vw"
+            fill={true}
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             style={{
               objectFit: 'cover'
             }}
