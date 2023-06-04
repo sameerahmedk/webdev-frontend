@@ -5,7 +5,7 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 export interface CartItem {
   id: string
   name: string
-  discountedPrice?: number
+  discountedPrice: number
   attributes: {
     image: string
     unitPrice: number
