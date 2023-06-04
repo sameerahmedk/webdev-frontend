@@ -4,9 +4,13 @@ type Discount = {
   _id: string
 }
 
+type VariationOption = {
+  option: string
+  quantity: number
+}
+
 type Variations = {
-  name: string
-  options: string[]
+  options: VariationOption[]
   _id: string
 }
 
@@ -18,7 +22,6 @@ export type Product = {
   unitPrice: number
   category: string
   brand: string
-  quantity: number
   discount: Discount[]
   variations: Variations[]
   image: string

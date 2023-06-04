@@ -22,9 +22,13 @@
     ],
     "variations": [
       {
-        "name": "Storage",
-        "options": ["128GB", "256GB", "512GB", "1TB"],
-        "_id": "6446aa5629513744e42d17d1"
+        "_id": "6446aa5629513744e42d17d1",
+        "options": [
+          { "option": "128GB", "quantity": 1000 },
+          { "option": "256GB", "quantity": 20 },
+          { "option": "512GB", "quantity": 15 },
+          { "option": "1TB", "quantity": 5 }
+        ]
       }
     ],
     "image": "https://fdn2.gsmarena.com/vv/bigpic/apple-iphone-13-pro.jpg",
@@ -53,9 +57,13 @@
     ],
     "variations": [
       {
-        "name": "Storage",
-        "options": ["128GB", "256GB", "512GB", "1TB"],
-        "_id": "6446aa5629513744e42d17d1"
+        "_id": "6446aa5629513744e42d17d1",
+        "options": [
+          { "option": "128GB", "quantity": 10 },
+          { "option": "256GB", "quantity": 20 },
+          { "option": "512GB", "quantity": 15 },
+          { "option": "1TB", "quantity": 5 }
+        ]
       }
     ],
     "image": "https://fdn2.gsmarena.com/vv/bigpic/samsung-galaxy-s21-ultra-5g-.jpg  ",
@@ -84,9 +92,13 @@
     ],
     "variations": [
       {
-        "name": "Storage",
-        "options": ["128GB", "256GB", "512GB", "1TB"],
-        "_id": "6446aa5629513744e42d17d1"
+        "_id": "6446aa5629513744e42d17d1",
+        "options": [
+          { "option": "128GB", "quantity": 10 },
+          { "option": "256GB", "quantity": 20 },
+          { "option": "512GB", "quantity": 15 },
+          { "option": "1TB", "quantity": 5 }
+        ]
       }
     ],
     "image": "https://fdn.gsmarena.com/imgroot/news/21/10/google-pixel-6-6-pro-official/-207/gsmarena_006.jpg",
@@ -115,9 +127,13 @@
     ],
     "variations": [
       {
-        "name": "Storage",
-        "options": ["128GB", "256GB", "512GB", "1TB"],
-        "_id": "6446aa5629513744e42d17d1"
+        "_id": "6446aa5629513744e42d17d1",
+        "options": [
+          { "option": "128GB", "quantity": 10 },
+          { "option": "256GB", "quantity": 20 },
+          { "option": "512GB", "quantity": 15 },
+          { "option": "1TB", "quantity": 5 }
+        ]
       }
     ],
     "image": "https://m.media-amazon.com/images/S/aplus-media-library-service-media/cc992628-23ea-4c89-b49d-66e6e7158721.__CR0,0,970,600_PT0_SX970_V1___.jpg",
@@ -146,9 +162,13 @@
     ],
     "variations": [
       {
-        "name": "Storage",
-        "options": ["128GB", "256GB", "512GB"],
-        "_id": "6446aa5629513744e42d17d1"
+        "_id": "6446aa5629513744e42d17d1",
+        "options": [
+          { "option": "128GB", "quantity": 10 },
+          { "option": "256GB", "quantity": 20 },
+          { "option": "512GB", "quantity": 15 },
+          { "option": "1TB", "quantity": 5 }
+        ]
       }
     ],
     "image": "https://media.naheed.pk/catalog/product/cache/49dcd5d85f0fa4d590e132d0368d8132/1/0/1028622-1.jpg",
@@ -173,6 +193,17 @@
         "quantity": 200,
         "percentage": 10,
         "_id": "6446aa5629513744e42d17d1"
+      }
+    ],
+    "variations": [
+      {
+        "_id": "6446aa5629513744e42d17d1",
+        "options": [
+          { "option": "128GB", "quantity": 10 },
+          { "option": "256GB", "quantity": 20 },
+          { "option": "512GB", "quantity": 15 },
+          { "option": "1TB", "quantity": 5 }
+        ]
       }
     ],
     "image": "https://m.media-amazon.com/images/I/815o4JhgzcL._AC_UL1500_.jpg",
@@ -201,9 +232,13 @@
     ],
     "variations": [
       {
-        "name": "Storage",
-        "options": ["128GB", "256GB"],
-        "_id": "6446aa5629513744e42d17d1"
+        "_id": "6446aa5629513744e42d17d1",
+        "options": [
+          { "option": "128GB", "quantity": 10 },
+          { "option": "256GB", "quantity": 20 },
+          { "option": "512GB", "quantity": 15 },
+          { "option": "1TB", "quantity": 5 }
+        ]
       }
     ],
     "image": "https://cdn-5c84bc36-b681cbc1.mysagestore.com/b522fd52e101edc926c3308c230445d5/contents/1A1104/thumbnail/big_1A1104.jpg",
@@ -232,9 +267,13 @@
     ],
     "variations": [
       {
-        "name": "Color",
-        "options": ["Black", "White", "Red"],
-        "_id": "6446aa5629513744e42d17d1"
+        "_id": "6446aa5629513744e42d17d1",
+        "options": [
+          { "option": "128GB", "quantity": 10 },
+          { "option": "256GB", "quantity": 20 },
+          { "option": "512GB", "quantity": 15 },
+          { "option": "1TB", "quantity": 5 }
+        ]
       }
     ],
     "image": "https://cdn.pixabay.com/photo/2015/04/23/22/00/tree-736885_960_720.jpg",
