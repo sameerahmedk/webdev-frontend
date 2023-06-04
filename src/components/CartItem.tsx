@@ -13,14 +13,14 @@ const CartItem = ({ data }) => {
 
   const dispatch = useDispatch()
 
-  const updateCartItem = (e, key) => {
+/*   const updateCartItem = (e, key) => {
     let payload: typeCartItem = {
       ...data,
       val: key === 'quantity' ? parseInt(e.target.value) : e.target.value,
       id: data.id
     }
     dispatch(addToCart(payload))
-  }
+  } */
 
   return (
     <div className="flex py-5 gap-3 md:gap-5 border-b">

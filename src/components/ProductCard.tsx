@@ -47,7 +47,7 @@ const ProductCard = ({ data: p }: ProductCardProps) => {
             </p>
             {hasDiscount && (
               <div className="text-sm text-green-500 font-medium">
-                {p.discount!.map(d => (
+                {p.discount.map(d => (
                   <div key={d._id}>
                     {d.quantity}+ items - {d.percentage}% off
                   </div>

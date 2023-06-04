@@ -58,7 +58,7 @@ const ProductDetails = ({
       })
     )
     toast.success('Added to cart!', {
-      position: 'top-right',
+      position: 'bottom-right',
       autoClose: 1000,
       hideProgressBar: true,
       closeOnClick: true,
