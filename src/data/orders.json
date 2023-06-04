@@ -1,0 +1,87 @@
+[
+  {
+    "retailerId": "retailer1",
+    "supplierId": "supplier1",
+    "products": [
+      {
+        "productId": "product1",
+        "productPrice": 10,
+        "productQuantity": 2
+      },
+      {
+        "productId": "product2",
+        "productPrice": 15,
+        "productQuantity": 3
+      }
+    ],
+    "totalPrice": 65
+  },
+  {
+    "retailerId": "retailer2",
+    "supplierId": "supplier1",
+    "products": [
+      {
+        "productId": "product1",
+        "productPrice": 10,
+        "productQuantity": 1
+      },
+      {
+        "productId": "product3",
+        "productPrice": 20,
+        "productQuantity": 2
+      }
+    ],
+    "totalPrice": 50
+  },
+  {
+    "retailerId": "retailer3",
+    "supplierId": "supplier2",
+    "products": [
+      {
+        "productId": "product2",
+        "productPrice": 15,
+        "productQuantity": 3
+      },
+      {
+        "productId": "product4",
+        "productPrice": 25,
+        "productQuantity": 2
+      }
+    ],
+    "totalPrice": 105
+  },
+  {
+    "retailerId": "retailer1",
+    "supplierId": "supplier2",
+    "products": [
+      {
+        "productId": "product3",
+        "productPrice": 20,
+        "productQuantity": 1
+      },
+      {
+        "productId": "product4",
+        "productPrice": 25,
+        "productQuantity": 4
+      }
+    ],
+    "totalPrice": 145
+  },
+  {
+    "retailerId": "retailer3",
+    "supplierId": "supplier1",
+    "products": [
+      {
+        "productId": "product1",
+        "productPrice": 10,
+        "productQuantity": 3
+      },
+      {
+        "productId": "product4",
+        "productPrice": 25,
+        "productQuantity": 1
+      }
+    ],
+    "totalPrice": 55
+  }
+]
