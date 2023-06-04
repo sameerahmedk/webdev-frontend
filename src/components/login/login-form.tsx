@@ -50,6 +50,7 @@ const LoginForm: React.FC = () => {
         Cookies.set('AccessToken', res.data['accessToken'], { expires: 7 })
         Cookies.set('RefreshToken', res.data['refreshToken'], { expires: 30 })
         Cookies.set('Role', res.data['userRole'], { expires: 30 })
+        Cookies.set('UserId', res.data['userId'], { expires: 30 })
         console.log(Cookies)
 
         const userRole = res.data['userRole']
