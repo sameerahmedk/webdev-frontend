@@ -1,11 +1,10 @@
-import React from 'react'
 import Link from 'next/link'
+import React from 'react'
 import { BsChevronDown } from 'react-icons/bs'
 
 const data = [
   { id: 1, name: 'Home', url: '/' },
   { id: 2, name: 'About', url: '/about' },
-  { id: 3, name: 'Categories', subMenu: true },
   { id: 4, name: 'Contact', url: '/contact' }
 ]
 
@@ -16,7 +15,7 @@ const subMenuData = [
   { id: 4, name: 'Football shoes', doc_count: 107 }
 ]
 
-const Menu = ({ showCatMenu, setShowCatMenu, categories }) => {
+const Menu = ({ showCatMenu, setShowCatMenu }) => {
   return (
     <ul className="hidden md:flex items-center gap-8 font-medium text-black">
       {data.map(item => {

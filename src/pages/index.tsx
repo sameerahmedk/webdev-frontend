@@ -22,7 +22,7 @@ export default function Home() {
           },
           headers: {
             Authorization:
-              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiI2NDQ2NzQ4NTUwOWVhYjA3YWEzYjBlMmQiLCJ1c2VyUm9sZSI6InN1cHBsaWVyIiwiaWF0IjoxNjg1OTczMjQ5LCJleHAiOjE2ODY1NzgwNDksImlzcyI6ImRhc3RneXIuY29tIn0.AIBD9z2YwOIGLgMRHFA-6C_enb4barAb3Mj1JjNtKjs' // Replace with your access token
+              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiI2NDQ2NzQ4NTUwOWVhYjA3YWEzYjBlMmQiLCJ1c2VyUm9sZSI6InN1cHBsaWVyIiwiaWF0IjoxNjg1OTczMjQ5LCJleHAiOjE2ODY1NzgwNDksImlzcyI6ImRhc3RneXIuY29tIn0.AIBD9z2YwOIGLgMRHFA-6C_enb4barAb3Mj1JjNtKjs'
           }
         })
 
@@ -56,7 +56,7 @@ export default function Home() {
               Your one-stop B2B marketplace!
             </div>
             <div className="text-md md:text-xl">
-              Get all your business needs in one place with the best prices.
+              Get all your favorite shoes in one place at the best prices.
             </div>
           </div>
           {/* heading and paragaph end */}
@@ -73,28 +73,3 @@ export default function Home() {
     </>
   )
 }
-
-// export async function getServerSideProps() {
-//   const fetchProducts = async () => {
-//     try {
-//       const response = await axios.get('http://localhost:8080/', {
-//         params: {
-//           filter: {}, // Add your filter object here if needed
-//           limit: 10 // Specify the limit for the number of products
-//         },
-//         headers: {
-//           Authorization: process.env.token // Replace with your access token
-//         }
-//       })
-
-//       return response.data
-//     } catch (error) {
-//       console.error('Error fetching products:', error.message)
-//     }
-//   }
-//   const products = await fetchProducts()
-
-//   return {
-//     props: { products }
-//   }
-// }

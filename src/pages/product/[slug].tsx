@@ -2,8 +2,7 @@ import Header from '@/components/Header'
 import ProductDetailsCarousel from '@/components/ProductDetailsCarousel'
 import RelatedProducts from '@/components/RelatedProducts'
 import Wrapper from '@/components/Wrapper'
-import { CartItem, addToCart } from '@/store/cartSlice'
-import { Order, OrderProduct } from '@/types/order'
+import { addToCart } from '@/store/cartSlice'
 import { Product } from '@/types/product'
 import { getDiscountedPricePercentage } from '@/utils/discountPercentage'
 import { useMemo, useState } from 'react'
@@ -119,7 +118,7 @@ const ProductDetails = ({
               {/* PRODUCT PRICE */}
               <div className="flex items-center">
                 <p className="mr-2 text-lg font-semibold">${discountedPrice}</p>
-                {product.unitPrice && (
+                {product.unitPrice ? (
                   <>
                     <p className="text-base  font-medium line-through">
                       ${product.unitPrice}
@@ -129,7 +128,7 @@ const ProductDetails = ({
                       % off
                     </p>
                   </>
-                )}
+                ) : null}
               </div>
 
               <div className="text-md font-medium text-black/[0.5]">
