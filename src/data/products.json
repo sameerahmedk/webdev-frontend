@@ -1,0 +1,202 @@
+[
+  {
+    "supplier": "64467485509eab07aa3b0e2d",
+    "name": "Nike Air Force 1 Low",
+    "description": "Iconic basketball sneakers",
+    "unitPrice": 100,
+    "category": "Footwear",
+    "brand": "Nike",
+    "image": "https://static.nike.com/a/images/t_PDP_1728_v1/f_auto,q_auto:eco/d67b3e9f-c360-431d-b402-05d1a0a25df3/air-force-1-low-retro-mens-shoes-1VHstQ.png",
+    "discount": [
+      {
+        "quantity": 500,
+        "percentage": 5,
+        "_id": "647e54faadd004766a46ba25"
+      },
+      {
+        "quantity": 1000,
+        "percentage": 10,
+        "_id": "647e54faadd004766a46ba26"
+      }
+    ],
+    "variations": [
+      {
+        "option": "Size 8",
+        "quantity": 5000,
+        "_id": "647e54faadd004766a46ba27"
+      },
+      {
+        "option": "Size 9",
+        "quantity": 10000,
+        "_id": "647e54faadd004766a46ba28"
+      },
+      {
+        "option": "Size 10",
+        "quantity": 0,
+        "_id": "647e54faadd004766a46ba29"
+      }
+    ],
+    "_id": "647e54faadd004766a46ba24",
+    "__v": 0
+  },
+  {
+    "supplier": "64467485509eab07aa3b0e2d",
+    "name": "Adidas Superstar",
+    "description": "Classic shell-toe sneakers",
+    "unitPrice": 90,
+    "category": "Footwear",
+    "brand": "Adidas",
+    "image": "https://assets.adidas.com/images/h_840,f_auto,q_auto,fl_lossy,c_fill,g_auto/a0399cedc40c4d48ac32af8f00cac96c_9366/Superstar_Shoes_Black_ID4279_01_standard.jpg",
+    "discount": [
+      {
+        "quantity": 500,
+        "percentage": 5,
+        "_id": "647e54faadd004766a46ba2b"
+      },
+      {
+        "quantity": 1000,
+        "percentage": 10,
+        "_id": "647e54faadd004766a46ba2c"
+      }
+    ],
+    "variations": [
+      {
+        "option": "Size 8",
+        "quantity": 5000,
+        "_id": "647e54faadd004766a46ba2d"
+      },
+      {
+        "option": "Size 9",
+        "quantity": 10000,
+        "_id": "647e54faadd004766a46ba2e"
+      },
+      {
+        "option": "Size 10",
+        "quantity": 0,
+        "_id": "647e54faadd004766a46ba2f"
+      }
+    ],
+    "_id": "647e54faadd004766a46ba2a",
+    "__v": 0
+  },
+  {
+    "supplier": "64467485509eab07aa3b0e2d",
+    "name": "Puma RS-X³ Puzzle",
+    "description": "Colorful retro sneakers",
+    "unitPrice": 120,
+    "category": "Footwear",
+    "brand": "Puma",
+    "image": "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_1200,h_1200/global/371570/01/sv01/fnd/PNA/fmt/png/RS-X%C2%B3-Puzzle-Men's-Sneakers",
+    "discount": [
+      {
+        "quantity": 500,
+        "percentage": 5,
+        "_id": "647e54faadd004766a46ba31"
+      },
+      {
+        "quantity": 1000,
+        "percentage": 10,
+        "_id": "647e54faadd004766a46ba32"
+      }
+    ],
+    "variations": [
+      {
+        "option": "Size 8",
+        "quantity": 5000,
+        "_id": "647e54faadd004766a46ba33"
+      },
+      {
+        "option": "Size 9",
+        "quantity": 10000,
+        "_id": "647e54faadd004766a46ba34"
+      },
+      {
+        "option": "Size 10",
+        "quantity": 0,
+        "_id": "647e54faadd004766a46ba35"
+      }
+    ],
+    "_id": "647e54faadd004766a46ba30",
+    "__v": 0
+  },
+  {
+    "supplier": "64467485509eab07aa3b0e2d",
+    "name": "Converse Chuck Taylor All Star",
+    "description": "Classic canvas sneakers",
+    "unitPrice": 70,
+    "category": "Footwear",
+    "brand": "Converse",
+    "image": "https://www.converse.com/dw/image/v2/BCZC_PRD/on/demandware.static/-/Sites-cnv-master-catalog/default/dwdd8d57cc/images/a_107/164027F_A_107X1.jpg?sw=964",
+    "discount": [
+      {
+        "quantity": 500,
+        "percentage": 5,
+        "_id": "647e54faadd004766a46ba37"
+      },
+      {
+        "quantity": 1000,
+        "percentage": 10,
+        "_id": "647e54faadd004766a46ba38"
+      }
+    ],
+    "variations": [
+      {
+        "option": "Size 8",
+        "quantity": 5000,
+        "_id": "647e54faadd004766a46ba39"
+      },
+      {
+        "option": "Size 9",
+        "quantity": 10000,
+        "_id": "647e54faadd004766a46ba3a"
+      },
+      {
+        "option": "Size 10",
+        "quantity": 0,
+        "_id": "647e54faadd004766a46ba3b"
+      }
+    ],
+    "_id": "647e54faadd004766a46ba36",
+    "__v": 0
+  },
+  {
+    "supplier": "64467485509eab07aa3b0e2d",
+    "name": "Vans Old Skool",
+    "description": "Classic skateboarding shoes",
+    "unitPrice": 65,
+    "category": "Footwear",
+    "brand": "Vans",
+    "image": "https://images.vans.com/is/image/Vans/VN000D3H_Y28_HERO?wid=1600&hei=1984&fmt=jpeg&qlt=90&resMode=sharp2&op_usm=0.9,1.7,8,0",
+    "discount": [
+      {
+        "quantity": 500,
+        "percentage": 5,
+        "_id": "647e54faadd004766a46ba3d"
+      },
+      {
+        "quantity": 1000,
+        "percentage": 10,
+        "_id": "647e54faadd004766a46ba3e"
+      }
+    ],
+    "variations": [
+      {
+        "option": "Size 8",
+        "quantity": 5000,
+        "_id": "647e54faadd004766a46ba3f"
+      },
+      {
+        "option": "Size 9",
+        "quantity": 10000,
+        "_id": "647e54faadd004766a46ba40"
+      },
+      {
+        "option": "Size 10",
+        "quantity": 0,
+        "_id": "647e54faadd004766a46ba41"
+      }
+    ],
+    "_id": "647e54faadd004766a46ba3c",
+    "__v": 0
+  }
+]
