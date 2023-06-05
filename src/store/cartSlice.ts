@@ -2,7 +2,7 @@ import { Product } from '@/types/product'
 import { getDiscountedPricePercentage } from '@/utils/discountPercentage'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-export interface CartItem {
+export interface CartItem extends Product {
   id: string
   name: string
   discountedPrice: number
@@ -28,56 +28,49 @@ export const cartSlice = createSlice({
 
   reducers: {
     addToCart: (state, action: PayloadAction<CartItem>) => {
-      const {
-        id,
-        name,
-        discountedPrice,
-        quantity,
-        attributes: { image, unitPrice }
-      } = action.payload
-      const existingItem = state.cartItems.find(p => p.id === id)
+      const { _id: id } = action.payload
+      const existingItem = state.cartItems.find(p => p._id === id)
 
       if (existingItem) {
         // Item already exists in the cart, update the quantity
-        const updatedQuantity: number = existingItem.quantity + quantity
-        // const updatedDiscountedPrice = calculateDiscountedPrice(existingItem)
+        const updatedQuantity: number =
+          existingItem.quantity + action.payload.quantity
 
         state.cartItems = state.cartItems.map(p => {
-          if (p.id === id) {
+          if (p._id === id) {
             return {
               ...p,
               quantity: updatedQuantity,
-              price: discountedPrice || unitPrice
+              unitPrice: calculateDiscountedPrice(p, updatedQuantity)
             }
           }
           return p
         })
       } else {
         // Add a new item to the cart
-        const newItem: CartItem = {
-          id: id,
-          name,
-          discountedPrice: discountedPrice || unitPrice,
-          attributes: {
-            image,
-            unitPrice: unitPrice
-          },
-          quantity: quantity
-        }
-        state.cartItems.push(newItem)
+        state.cartItems.push({
+          ...action.payload,
+          unitPrice: calculateDiscountedPrice(
+            action.payload,
+            action.payload.quantity
+          )
+        })
       }
     },
 
     removeFromCart: (state, action: PayloadAction<{ id: string }>) => {
-      state.cartItems = state.cartItems.filter(p => p.id !== action.payload.id)
+      state.cartItems = state.cartItems.filter(p => p._id !== action.payload.id)
+    },
+
+    clearCart: state => {
+      state.cartItems = []
     }
   }
 })
 
-function calculateDiscountedPrice(
-  { attributes: { unitPrice }, quantity },
-  discount: Product['discount']
-): number {
+function calculateDiscountedPrice(item: CartItem, quantity: number): number {
+  const { unitPrice, discount } = item
+
   const discountPercentage = getDiscountedPricePercentage(quantity, discount)
   const discountedPrice = unitPrice * (1 - discountPercentage / 100)
 
@@ -85,6 +78,6 @@ function calculateDiscountedPrice(
 }
 
 // Action creators are generated for each case reducer function
-export const { addToCart, removeFromCart } = cartSlice.actions
+export const { addToCart, removeFromCart, clearCart } = cartSlice.actions
 
 export default cartSlice.reducer

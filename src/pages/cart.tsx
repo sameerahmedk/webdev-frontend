@@ -1,15 +1,22 @@
 import CartItem from '@/components/CartItem'
 import Wrapper from '@/components/Wrapper'
+import { clearCart } from '@/store/cartSlice'
 import { RootState } from '@/store/store'
+import { Order } from '@/types/order'
+import axios from 'axios'
 import currency from 'currency.js'
 import Image from 'next/image'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useMemo, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 const Cart = () => {
   const [loading, setLoading] = useState(false)
   const { cartItems } = useSelector((state: RootState) => state.cart)
+
+  const dispatch = useDispatch()
+  const router = useRouter()
 
   const discountedSubtotal = useMemo(() => {
     return currency(
@@ -18,7 +25,7 @@ const Cart = () => {
         0
       ),
       { increment: 1 }
-    ).format()
+    )
   }, [cartItems])
 
   const total = useMemo(() => {
@@ -28,30 +35,47 @@ const Cart = () => {
         0
       ),
       { increment: 1 }
-    ).format()
+    )
   }, [cartItems])
 
   const discount = useMemo(() => {
-    return currency(total).subtract(discountedSubtotal).format()
+    return currency(total).subtract(discountedSubtotal)
   }, [total, discountedSubtotal])
 
-  //   const discountPercentage = useMemo(() => {})
+  const handleCheckout = () => {
+    setLoading(true)
 
-  const handlePayment = async () => {
-    /*  try {
-            setLoading(true);
-            const stripe = await stripePromise;
-            const res = await makePaymentRequest("/api/orders", {
-                products: cartItems,
-            });
-            await stripe.redirectToCheckout({
-                sessionId: res.stripeSession.id,
-            });
-        } catch (error) {
-            setLoading(false);
-            console.log(error);
-        } */
-    return
+    const order: Order = {
+      productId: cartItems[0].id,
+      productPrice: cartItems[0].attributes.unitPrice,
+      productQuantity: cartItems[0].quantity,
+      selectedOptions: cartItems[0].selectedOptions,
+      totalPrice: total.value
+    }
+
+    axios
+      .post(
+        'http://localhost:8080/order',
+        {
+          order
+        },
+        {
+          headers: {
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiI2NDQ2NzQ4NTUwOWVhYjA3YWEzYjBlMmQiLCJ1c2VyUm9sZSI6InN1cHBsaWVyIiwiaWF0IjoxNjg1OTczMjQ5LCJleHAiOjE2ODY1NzgwNDksImlzcyI6ImRhc3RneXIuY29tIn0.AIBD9z2YwOIGLgMRHFA-6C_enb4barAb3Mj1JjNtKjs`
+          }
+        }
+      )
+      .then(() => {
+        console.log('Order placed successfully')
+        dispatch(clearCart()) // Clear the cart after successful checkout
+        router.push('/') // Redirect to the home page
+      })
+      .catch(error => {
+        console.error('An error occurred during checkout:', error.message)
+      })
+      .finally(() => {
+        setLoading(false)
+      })
   }
 
   return (
@@ -88,7 +112,7 @@ const Cart = () => {
                       {currency(discount).value === 0 ? (
                         `$${total}`
                       ) : (
-                        <s>{total}</s>
+                        <s>{total.format()}</s>
                       )}
                     </div>
                   </div>
@@ -108,7 +132,7 @@ const Cart = () => {
                   <div className="flex justify-between mb-4">
                     <div className="text-md font-medium">Subtotal</div>
                     <div className="text-md font-medium">
-                      {discountedSubtotal}
+                      {discountedSubtotal.format()}
                     </div>
                   </div>
                   <div className="text-sm py-5 border-t mt-5">
@@ -121,7 +145,7 @@ const Cart = () => {
                 <button
                   type="submit"
                   className="w-full py-4 rounded-full bg-black text-white text-lg font-medium transition-transform active:scale-95 mb-3 hover:opacity-75 flex items-center gap-2 justify-center"
-                  onClick={handlePayment}>
+                  onClick={handleCheckout}>
                   Checkout
                   {loading && <img src="/spinner.svg" alt="loading" />}
                 </button>

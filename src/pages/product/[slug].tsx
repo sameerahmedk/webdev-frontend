@@ -2,8 +2,9 @@ import Header from '@/components/Header'
 import ProductDetailsCarousel from '@/components/ProductDetailsCarousel'
 import RelatedProducts from '@/components/RelatedProducts'
 import Wrapper from '@/components/Wrapper'
-import { addToCart } from '@/store/cartSlice'
-import { Product, Products } from '@/types/product'
+import { CartItem, addToCart } from '@/store/cartSlice'
+import { Order, OrderProduct } from '@/types/order'
+import { Product } from '@/types/product'
 import { getDiscountedPricePercentage } from '@/utils/discountPercentage'
 import { useMemo, useState } from 'react'
 import { IoMdHeartEmpty } from 'react-icons/io'
@@ -17,14 +18,14 @@ const ProductDetails = ({
   products
 }: {
   product: Product
-  products: Products
+  products: Product[]
 }): JSX.Element => {
   const [showError, setShowError] = useState(false)
 
   const dispatch = useDispatch()
 
   const [selectedOption, setSelectedOption] = useState('')
-  const [quantity, setQuantity] = useState(1)
+  const [quantity, setQuantity] = useState(50)
 
   const calculateDiscountedPrice = (
     quantity: number,
@@ -55,6 +56,7 @@ const ProductDetails = ({
         }
       })
     )
+
     toast.success('Added to cart!', {
       position: 'bottom-right',
       autoClose: 1000,
@@ -76,18 +78,18 @@ const ProductDetails = ({
 
   const handleIncreaseClick = () => {
     if (quantity < selectedOption.quantity) {
-      setQuantity(prevQuantity => prevQuantity + 1)
+      setQuantity(prevQuantity => prevQuantity + 50)
     }
   }
 
   const handleDecreaseClick = () => {
-    setQuantity(prevQuantity => Math.max(prevQuantity - 1, 1))
+    setQuantity(prevQuantity => Math.max(prevQuantity - 50, 50))
   }
 
   const handleOptionClick = (option: string, quantity: number) => {
     if (quantity > 0) {
       setSelectedOption({ option, quantity })
-      setQuantity(1) // Reset quantity when changing options
+      setQuantity(50) // Reset quantity when changing options
       setShowError(false)
     } else {
       setShowError(true)
@@ -141,7 +143,7 @@ const ProductDetails = ({
               {/* Product Variations */}
               <div className="mb-4 flex flex-wrap">
                 {product.variations.length > 0 &&
-                  product.variations[0].options.map(option => (
+                  product.variations.map(option => (
                     <div
                       key={option.option}
                       className={`flex-auto inline-block mr-2 mb-2 ${

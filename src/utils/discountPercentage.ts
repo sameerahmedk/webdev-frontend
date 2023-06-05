@@ -1,7 +1,7 @@
 export interface Discount {
-  quantity: number;
-  percentage: number;
-  _id: string;
+  quantity: number
+  percentage: number
+  _id: string
 }
 
 export function getDiscountedPricePercentage(
@@ -21,16 +21,3 @@ export function getDiscountedPricePercentage(
 
   return discountPercentage
 }
-
-/* 
-export const getDiscountedPricePercentage = (
-    originalPrice,
-    discountedPrice
-) => {
-    const discount = originalPrice - discountedPrice;
-
-    const discountPercentage = (discount / originalPrice) * 100;
-
-    return discountPercentage.toFixed(2);
-};
- */
