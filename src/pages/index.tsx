@@ -1,4 +1,5 @@
 import Header from '@/components/Header'
+import Footer from '@/components/Footer'
 import HeroBanner from '@/components/HeroBanner'
 import ProductCard from '@/components/ProductCard'
 import Wrapper from '@/components/Wrapper'
@@ -69,6 +70,7 @@ export default function Home() {
           </div>
           {/* products grid end */}
         </Wrapper>
+        <Footer />
       </main>
     </>
   )

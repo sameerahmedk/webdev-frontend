@@ -1,6 +1,5 @@
 import Link from 'next/link'
-import React from 'react'
-import { FaFacebookF, FaTwitter, FaYoutube, FaInstagram } from 'react-icons/fa'
+import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa'
 import Wrapper from './Wrapper'
 
 const Footer = () => {
@@ -81,7 +80,13 @@ const Footer = () => {
         {/* RIGHT START */}
         <div className="flex gap-4 justify-center md:justify-start">
           <div
-            onClick={() => window.open('https://facebook.com', '_blank')}
+            onClick={() =>
+              window.open(
+                'https://facebook.com',
+                '_blank',
+                'noopener, noreferrer'
+              )
+            }
             className="w-10 h-10 rounded-full bg-white/[0.25] flex items-center justify-center text-black hover:bg-white/[0.5] cursor-pointer">
             <FaFacebookF size={20} />
           </div>
