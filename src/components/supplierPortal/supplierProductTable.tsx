@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react'
 import useMediaQuery from '@mui/material/useMediaQuery'
+import Cookies from 'js-cookie'
 
 const ProductTable = () => {
   const [products, setProducts] = useState([])
   const isLargeScreen = useMediaQuery('(min-width: 768px)')
 
+  const authToken = Cookies.get('AccessToken')
+
   useEffect(() => {
     // Fetch products from API
     fetch('http://localhost:8080/product/', {
       headers: {
-        Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2ODU4NDczNDEsImV4cCI6MTY4NjIwNzM0MSwiYXVkIjoiNjQ0Njc0ODU1MDllYWIwN2FhM2IwZTJkIiwiaXNzIjoiZGFzdGd5ci5jb20ifQ.m5wnfabrgAFX6IeA6yCDnIMZPuZMn7Og4_uRfulPwvY'
+        Authorization: `Bearer ${authToken}`
       }
     })
       .then(response => response.json())
@@ -23,8 +25,7 @@ const ProductTable = () => {
     fetch(`http://localhost:8080/product/${productId}`, {
       method: 'DELETE',
       headers: {
-        Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2ODU4NDczNDEsImV4cCI6MTY4NjIwNzM0MSwiYXVkIjoiNjQ0Njc0ODU1MDllYWIwN2FhM2IwZTJkIiwiaXNzIjoiZGFzdGd5ci5jb20ifQ.m5wnfabrgAFX6IeA6yCDnIMZPuZMn7Og4_uRfulPwvY'
+        Authorization: `Bearer ${authToken}`
       }
     })
       .then(() => {
@@ -48,22 +49,26 @@ const ProductTable = () => {
             <th className="py-3 px-4 border-b font-medium text-gray-700">
               Name
             </th>
-            <th className="py-3 px-4 border-b font-medium text-gray-700 text-right">
+            {/* <th className="py-3 px-4 border-b font-medium text-gray-700 text-right">
               Quantity
-            </th>
-            <th className="py-3 px-4 border-b font-medium text-gray-700 text-right">
+            </th> */}
+            <th className="py-3 px-4 border-b font-medium text-gray-700 text-centre">
               Price
             </th>
-            <th className="py-3 px-4 border-b font-medium text-gray-700 text-right">
+            <th className="py-3 px-4 border-b font-medium text-gray-700 text-centre">
               Category
             </th>
-            <th className="py-3 px-4 border-b font-medium text-gray-700 text-right">
+            <th className="py-3 px-4 border-b font-medium text-gray-700 text-centre">
               Brand
             </th>
-            <th className="py-3 px-4 border-b font-medium text-gray-700 text-right">
+            <th className="py-3 px-4 border-b font-medium text-gray-700 text-centre">
+              Variations
+            </th>
+            <th className="py-3 px-4 border-b font-medium text-gray-700 text-centre">
               Discount
             </th>
-            <th className="py-3 px-4 border-b font-medium text-gray-700 text-right">
+
+            <th className="py-3 px-4 border-b font-medium text-gray-700 text-centre">
               Actions
             </th>
           </tr>
@@ -73,25 +78,37 @@ const ProductTable = () => {
           {products.map(product => (
             <tr key={product._id}>
               <td className="py-4 px-6 border-b">{product.name}</td>
-              <td className="py-4 px-6 border-b text-right">
+              {/* <td className="py-4 px-6 border-b text-right">
                 {product.quantity}
-              </td>
-              <td className="py-4 px-6 border-b text-right">
+              </td> */}
+              <td className="py-4 px-6 border-b text-left">
                 {product.unitPrice}
               </td>
-              <td className="py-4 px-6 border-b text-right">
+              <td className="py-4 px-6 border-b text-left">
                 {product.category}
               </td>
-              <td className="py-4 px-6 border-b text-right">{product.brand}</td>
-              <td className="py-4 px-6 border-b text-right">
+              <td className="py-4 px-6 border-b text-left">{product.brand}</td>
+              <td className="py-4 px-6 border-b text-left ">
+                {/* {product.variations.map(variation => (
+                  <div key={variation._id}> */}
+                {product.variations.map(option => (
+                  <div key={option._id} style={{ marginBottom: '15px' }}>
+                    <p>{option.option}</p>
+                    <p>Qty: {option.quantity}</p>
+                  </div>
+                ))}
+                {/* </div>
+                ))} */}
+              </td>
+              <td className="py-4 px-6 border-b text-left">
                 {product.discount.map(discount => (
-                  <div key={discount._id}>
-                    Quantity: {discount.quantity}, Percentage:{' '}
+                  <div key={discount._id} style={{ marginBottom: '15px' }}>
+                    Quantity: {discount.quantity}, Discount:{' '}
                     {discount.percentage}%
                   </div>
                 ))}
               </td>
-              <td className="py-4 px-6 border-b text-right">
+              <td className="py-4 px-6 border-b text-left">
                 <button
                   type="button"
                   onClick={() => handleDeleteProduct(product._id)}

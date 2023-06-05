@@ -5,6 +5,7 @@ import Header from '@/components/supplierPortal/supplierPortalHeader'
 import { AiOutlinePlus } from 'react-icons/ai'
 
 import { useEffect, useState } from 'react'
+import Cookies from 'js-cookie'
 
 const supplierTable = () => {
   //   const [products, setProducts] = useState([])
@@ -18,6 +19,7 @@ const supplierTable = () => {
     brand: '',
     quantity: 0,
     discounts: [{ quantity: 0, percentage: 0 }],
+    variations: [{ option: '', quantity: 0 }],
     image: ''
   })
 
@@ -29,6 +31,7 @@ const supplierTable = () => {
     brand: '',
     quantity: 0,
     discounts: [{ quantity: 0, percentage: 0 }],
+    variations: [{ option: '', quantity: 0 }],
     image: ''
   }
 
@@ -45,13 +48,13 @@ const supplierTable = () => {
       alert('Please fill all fields before submitting')
     } else {
       const requestBody = {
-        supplier: '64467485509eab07aa3b0e2d',
         name: formData.name,
         description: formData.description,
         unitPrice: formData.unitPrice,
         category: formData.category,
         brand: formData.brand,
-        quantity: formData.quantity,
+        // quantity: formData.quantity,
+        variations: formData.variations,
         discount: formData.discounts,
         image: formData.image
       }
@@ -61,7 +64,7 @@ const supplierTable = () => {
         headers: {
           'Content-Type': 'application/json',
           Authorization:
-            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2ODU4NDczNDEsImV4cCI6MTY4NjIwNzM0MSwiYXVkIjoiNjQ0Njc0ODU1MDllYWIwN2FhM2IwZTJkIiwiaXNzIjoiZGFzdGd5ci5jb20ifQ.m5wnfabrgAFX6IeA6yCDnIMZPuZMn7Og4_uRfulPwvY'
+            'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiI2NDQ2NzQ4NTUwOWVhYjA3YWEzYjBlMmQiLCJ1c2VyUm9sZSI6InN1cHBsaWVyIiwiaWF0IjoxNjg1OTg2Mzg5LCJleHAiOjE2ODY1OTExODksImlzcyI6ImRhc3RneXIuY29tIn0.b8H8THRWbGKmb0Ziy33tL5DPut5hlUFp4Wvxq2JLPa0'
         },
         body: JSON.stringify(requestBody)
       })
@@ -103,11 +106,37 @@ const supplierTable = () => {
     })
   }
 
+  const handleVariationChange = (index, field, value) => {
+    setFormData(prevData => {
+      const variations = [...prevData.variations]
+      variations[index][field] = value
+      return { ...prevData, variations }
+    })
+  }
+
+  const handleAddVariationRow = () => {
+    setFormData(prevData => ({
+      ...prevData,
+      variations: [...prevData.variations, { option: '', quantity: 0 }]
+    }))
+  }
+
   const handleAddDiscountRow = () => {
     setFormData(prevData => ({
       ...prevData,
       discounts: [...prevData.discounts, { quantity: 0, percentage: 0 }]
     }))
+  }
+
+  const handleDeleteVariationRow = index => {
+    setFormData(prevData => {
+      const updatedVariations = [...prevData.variations]
+      updatedVariations.splice(index, 1)
+      return {
+        ...prevData,
+        variations: updatedVariations
+      }
+    })
   }
 
   const handleDeleteDiscountRow = index => {
@@ -195,6 +224,7 @@ const supplierTable = () => {
                     onChange={handleChange}
                     className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     <option value="">Select category</option>
+                    <option value="Shoes">Shoes</option>
                     <option value="Sports">Sports</option>
                     <option value="Electronics">Electronics</option>
                     <option value="Outdoor & Camping">Outdoor & Camping</option>
@@ -216,20 +246,71 @@ const supplierTable = () => {
                     className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                   />
                 </div>
+
                 <div className="mb-4">
                   <label
-                    htmlFor="quantity"
+                    htmlFor="discount"
                     className="block text-gray-700 font-bold mb-2">
-                    Quantity:
+                    Variations:
                   </label>
-                  <input
-                    type="number"
-                    id="quantity"
-                    name="quantity"
-                    value={formData.quantity}
-                    onChange={handleChange}
-                    className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                  />
+                  {formData.variations.map((discount, index) => (
+                    <div key={index} className="flex mb-2">
+                      <div className="w-1/2">
+                        <label
+                          htmlFor="quantity"
+                          className="block text-sm font-medium text-gray-700">
+                          Quantity
+                        </label>
+                        <input
+                          type="number"
+                          id={`variation-quantity-${index}`}
+                          name={`variation-quantity-${index}`}
+                          value={discount.quantity}
+                          onChange={e =>
+                            handleVariationChange(
+                              index,
+                              'quantity',
+                              e.target.value
+                            )
+                          }
+                          className="appearance-none border rounded w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline mr-2"
+                        />
+                      </div>
+                      <div className="w-1/2 pl-4">
+                        <label
+                          htmlFor="options"
+                          className="block text-sm font-medium text-gray-700">
+                          Options
+                        </label>
+                        <input
+                          type="text"
+                          id={`variation-option-${index}`}
+                          name={`variation-option-${index}`}
+                          value={discount.option}
+                          onChange={e =>
+                            handleVariationChange(
+                              index,
+                              'option',
+                              e.target.value
+                            )
+                          }
+                          className="appearance-none border rounded w-1/2 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline ml-2"
+                        />
+                        <button
+                          type="button"
+                          onClick={() => handleDeleteVariationRow(index)}
+                          className="bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded  text-sm ml-8">
+                          Delete
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={handleAddVariationRow}
+                    className="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded">
+                    Add Variation
+                  </button>
                 </div>
                 <div className="mb-4">
                   <label
