@@ -224,7 +224,7 @@ const supplierTable = () => {
                     onChange={handleChange}
                     className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                     <option value="">Select category</option>
-                    <option value="Shoes">Shoes</option>
+                    <option value="Footwear">Footwear</option>
                     <option value="Sports">Sports</option>
                     <option value="Electronics">Electronics</option>
                     <option value="Outdoor & Camping">Outdoor & Camping</option>

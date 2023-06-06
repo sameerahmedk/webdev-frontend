@@ -70,13 +70,22 @@ const OrderTable = () => {
                 Order ID
               </th>
               <th className="py-3 px-4 border-b font-medium text-gray-700 text-centre">
-                Retailer
+                Retailer ID
               </th>
               {/* <th className="py-3 px-4 border-b font-medium text-gray-700 text-centre">
                 Supplier
               </th> */}
               <th className="py-3 px-4 border-b font-medium text-gray-700 text-centre">
-                Products
+                Product ID
+              </th>
+              <th className="py-3 px-4 border-b font-medium text-gray-700 text-centre">
+                Product Price
+              </th>
+              <th className="py-3 px-4 border-b font-medium text-gray-700 text-centre">
+                Product Quantity
+              </th>
+              <th className="py-3 px-4 border-b font-medium text-gray-700 text-centre">
+                Variation
               </th>
               <th className="py-3 px-4 border-b font-medium text-gray-700 text-centre">
                 Total Price
@@ -94,7 +103,17 @@ const OrderTable = () => {
               <tr>
                 <td className="py-4 px-6 border-b">{order._id}</td>
                 <td className="py-4 px-6 border-b">{order.retailerId}</td>
+                <td className="py-4 px-6 border-b">{order.productId}</td>
                 <td className="py-4 px-6 border-b text-left">
+                  {order.productPrice}$
+                </td>
+                <td className="py-4 px-6 border-b text-left">
+                  {order.productQuantity}
+                </td>
+                <td className="py-4 px-6 border-b text-left">
+                  {order.selectedOptions[0]}
+                </td>
+                {/* <td className="py-4 px-6 border-b text-left">
                   {order.products.map(product => (
                     <div
                       key={product.productId}
@@ -111,7 +130,7 @@ const OrderTable = () => {
                       <br />
                     </div>
                   ))}
-                </td>
+                </td> */}
                 <td className="py-4 px-6 border-b text-left">
                   {order.totalPrice}$
                 </td>
