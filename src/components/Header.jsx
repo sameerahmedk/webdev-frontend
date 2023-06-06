@@ -1,15 +1,16 @@
 import { useEffect, useState } from 'react'
 import Wrapper from './Wrapper'
-
+import { FiLogOut } from 'react-icons/fi'
 import Link from 'next/link'
 import Menu from './Menu'
 import MenuMobile from './MenuMobile'
-
+import Cookies from 'js-cookie'
 import { BiMenuAltRight } from 'react-icons/bi'
 import { BsCart } from 'react-icons/bs'
 import { IoMdHeartEmpty } from 'react-icons/io'
 import { VscChromeClose } from 'react-icons/vsc'
 import { useSelector } from 'react-redux'
+import { useRouter } from 'next/router'
 
 const Header = () => {
   const [mobileMenu, setMobileMenu] = useState(false)
@@ -18,6 +19,16 @@ const Header = () => {
   const [lastScrollY, setLastScrollY] = useState(0)
 
   const { cartItems } = useSelector(state => state.cart)
+  const router = useRouter()
+  const handleLogout = () => {
+    // Clear cookies here
+    Cookies.remove('AccessToken')
+    Cookies.remove('RefreshToken')
+    Cookies.remove('Role')
+    Cookies.remove('UserId')
+    // Redirect to index page
+    router.push('/')
+  }
 
   const controlNavbar = () => {
     if (window.scrollY > 200) {
@@ -73,6 +84,12 @@ const Header = () => {
             </div>
           </Link>
           {/* Icon end */}
+          <button
+            className="ml-2 bg-red-400 hover:bg-red-500 text-white font-bold py-2 px-4 rounded"
+            onClick={handleLogout}>
+            <FiLogOut className="inline-block mr-2 text-xl" />
+            Logout
+          </button>
 
           {/* Mobile icon start */}
           <div className="w-8 md:w-12 h-8 md:h-12 rounded-full flex md:hidden justify-center items-center hover:bg-black/[0.05] cursor-pointer relative -mr-2">
