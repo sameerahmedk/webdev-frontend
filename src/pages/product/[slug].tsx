@@ -5,50 +5,91 @@ import Wrapper from '@/components/Wrapper'
 import { addToCart } from '@/store/cartSlice'
 import { Product } from '@/types/product'
 import { getDiscountedPricePercentage } from '@/utils/discountPercentage'
-import { useMemo, useState } from 'react'
+import { useRouter } from 'next/router'
+import { useEffect, useState } from 'react'
 import { IoMdHeartEmpty } from 'react-icons/io'
 import ReactMarkdown from 'react-markdown'
 import { useDispatch } from 'react-redux'
 import { ToastContainer, toast } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 
-const ProductDetails = ({
-  product,
-  products
-}: {
+const calculateDiscountedPrice = (
+  quantity: number,
   product: Product
-  products: Product[]
-}): JSX.Element => {
+): number => {
+  const { unitPrice, discount } = product
+  const discountPercentage = getDiscountedPricePercentage(quantity, discount)
+
+  const discountedPrice = unitPrice - (unitPrice * discountPercentage) / 100
+  return discountedPrice
+}
+
+const ProductDetails = (): JSX.Element => {
+  const [product, setProduct] = useState<Product | null>(null)
+  const [products, setProducts] = useState<Product[]>([]) // New state for all products
   const [showError, setShowError] = useState(false)
-
-  const dispatch = useDispatch()
-
   const [selectedOption, setSelectedOption] = useState('')
   const [quantity, setQuantity] = useState(50)
 
-  const calculateDiscountedPrice = (
-    quantity: number,
-    product: Product
-  ): number => {
-    const { unitPrice, discount } = product
-    const discountPercentage = getDiscountedPricePercentage(quantity, discount)
+  const dispatch = useDispatch()
 
-    const discountedPrice = unitPrice - (unitPrice * discountPercentage) / 100
-    return discountedPrice
+  const router = useRouter()
+  const { slug } = router.query
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(`http://localhost:8080/product/${slug}`, {
+          headers: {
+            Authorization: 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiI2NDQ2NzQ4NTUwOWVhYjA3YWEzYjBlMmQiLCJ1c2VyUm9sZSI6InN1cHBsaWVyIiwiaWF0IjoxNjg1OTczMjQ5LCJleHAiOjE2ODY1NzgwNDksImlzcyI6ImRhc3RneXIuY29tIn0.AIBD9z2YwOIGLgMRHFA-6C_enb4barAb3Mj1JjNtKjs',
+          }
+        })
+        const data = await response.json()
+        setProduct(data)
+      } catch (error) {
+        console.error('Error fetching product:', error)
+        setProduct(null)
+      }
+    }
+
+    fetchData()
+  }, [slug])
+
+  // Fetch all products
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/product', {
+          headers: {
+            Authorization:
+              'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiI2NDQ2NzQ4NTUwOWVhYjA3YWEzYjBlMmQiLCJ1c2VyUm9sZSI6InN1cHBsaWVyIiwiaWF0IjoxNjg1OTczMjQ5LCJleHAiOjE2ODY1NzgwNDksImlzcyI6ImRhc3RneXIuY29tIn0.AIBD9z2YwOIGLgMRHFA-6C_enb4barAb3Mj1JjNtKjs',
+          },
+        })
+        const data = await response.json()
+        setProducts(data)
+      } catch (error) {
+        console.error('Error fetching products:', error)
+        setProducts([])
+      }
+    }
+
+    fetchProducts()
+  }, [])
+
+  if (!product || !products) {
+    return <div>Loading...</div>
   }
 
-  const discountedPrice = useMemo(
-    () => calculateDiscountedPrice(quantity, product),
-    [quantity, product]
-  )
+  const discountedPrice = calculateDiscountedPrice(quantity, product)
 
   const handleAddToCart = () => {
     dispatch(
       addToCart({
         ...product,
         quantity: quantity,
-        discountedPrice: discountedPrice || product.unitPrice,
+        discountedPrice: discountedPrice,
         id: product._id,
+        selectedOptions: selectedOption.option,
         attributes: {
           image: product.image,
           unitPrice: product.unitPrice
@@ -145,11 +186,10 @@ const ProductDetails = ({
                   product.variations.map(option => (
                     <div
                       key={option.option}
-                      className={`flex-auto inline-block mr-2 mb-2 ${
-                        option.option === selectedOption.option
+                      className={`flex-auto inline-block mr-2 mb-2 ${option.option === selectedOption.option
                           ? 'bg-gray-200'
                           : 'bg-gray-100'
-                      }`}
+                        }`}
                       onClick={() =>
                         handleOptionClick(option.option, option.quantity)
                       }
@@ -245,43 +285,3 @@ const ProductDetails = ({
 }
 
 export default ProductDetails
-
-import fs from 'fs'
-import path from 'path'
-
-export async function getStaticPaths() {
-  const productsFilePath = path.join(
-    process.cwd(),
-    'src',
-    'data',
-    'products.json'
-  )
-  const productsData = fs.readFileSync(productsFilePath).toString()
-  const products = JSON.parse(productsData)
-
-  // Generate a list of all product slugs to pre-render
-  const paths = products.map(product => ({
-    params: { slug: product._id }
-  }))
-
-  return { paths, fallback: false }
-}
-
-export async function getStaticProps({ params }) {
-  const productsFilePath = path.join(
-    process.cwd(),
-    'src',
-    'data',
-    'products.json'
-  )
-  const productsData = fs.readFileSync(productsFilePath).toString()
-  const products = JSON.parse(productsData)
-  const product = products.find(product => product._id === params.slug)
-
-  return {
-    props: {
-      product: product,
-      products: products
-    }
-  }
-}
