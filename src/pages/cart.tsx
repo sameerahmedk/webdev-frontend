@@ -14,7 +14,7 @@ import Cookies from 'js-cookie'
 
 const Cart = () => {
   const [loading, setLoading] = useState(false)
-  const { cartItems } = useSelector((state: RootState) => state.cart)
+  const { cartItems } = useSelector((state: RootState) => state.cart) || {} // Add conditional check
 
   const dispatch = useDispatch()
   const router = useRouter()
@@ -47,12 +47,18 @@ const Cart = () => {
   const handleCheckout = () => {
     setLoading(true)
 
+if (!cartItems || cartItems.length === 0) {
+      console.error('Cart is empty')
+      setLoading(false)
+      return
+    }
+
     const order: Order = {
       productId: cartItems[0].id,
       productPrice: cartItems[0].attributes.unitPrice,
       productQuantity: cartItems[0].quantity,
       selectedOptions: cartItems[0].selectedOptions,
-      totalPrice: total.value
+      totalPrice: discountedSubtotal.value,
     }
 
     axios
@@ -70,13 +76,13 @@ const Cart = () => {
       .then(() => {
         console.log('Order placed successfully')
         dispatch(clearCart()) // Clear the cart after successful checkout
-        router.push('/') // Redirect to the home page
       })
       .catch(error => {
         console.error('An error occurred during checkout:', error.message)
       })
       .finally(() => {
         setLoading(false)
+        router.push('/') // Redirect to the home page
       })
   }
 

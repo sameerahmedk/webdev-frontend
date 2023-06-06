@@ -12,6 +12,9 @@ export interface CartItem extends Product {
     [key: string]: any
   }
   quantity: number
+  selectedOptions: {
+    option: string
+  }
 }
 
 export interface CartState {
