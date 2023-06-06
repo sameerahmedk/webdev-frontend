@@ -10,6 +10,7 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useMemo, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import Cookies from 'js-cookie'
 
 const Cart = () => {
   const [loading, setLoading] = useState(false)
@@ -17,6 +18,7 @@ const Cart = () => {
 
   const dispatch = useDispatch()
   const router = useRouter()
+  const authToken = Cookies.get('AccessToken')
 
   const discountedSubtotal = useMemo(() => {
     return currency(
@@ -67,7 +69,7 @@ if (!cartItems || cartItems.length === 0) {
         },
         {
           headers: {
-            Authorization: `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiI2NDQ2NzQ4NTUwOWVhYjA3YWEzYjBlMmQiLCJ1c2VyUm9sZSI6InN1cHBsaWVyIiwiaWF0IjoxNjg1OTczMjQ5LCJleHAiOjE2ODY1NzgwNDksImlzcyI6ImRhc3RneXIuY29tIn0.AIBD9z2YwOIGLgMRHFA-6C_enb4barAb3Mj1JjNtKjs`
+            Authorization: `Bearer ${authToken}`
           }
         }
       )
@@ -180,7 +182,7 @@ if (!cartItems || cartItems.length === 0) {
               Go ahead and explore top categories.
             </span>
             <Link
-              href="/"
+              href="/home"
               className="py-4 px-8 rounded-full bg-black text-white text-lg font-medium transition-transform active:scale-95 mb-3 hover:opacity-75 mt-8">
               Continue Shopping
             </Link>

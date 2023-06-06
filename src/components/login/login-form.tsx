@@ -6,6 +6,8 @@ import * as yup from 'yup'
 import axios from 'axios'
 import Cookies from 'js-cookie'
 const jsonwebtoken = require('jsonwebtoken')
+import { useRouter } from 'next/router'
+import { useState } from 'react'
 interface LoginFormInputs {
   email: string
   password: string
@@ -17,6 +19,8 @@ const schema = yup.object().shape({
 })
 
 const LoginForm: React.FC = () => {
+  const router = useRouter()
+  const [error, setError] = useState<string>('')
   const {
     register,
     handleSubmit,
@@ -45,10 +49,20 @@ const LoginForm: React.FC = () => {
         console.log(res.data['accessToken'])
         Cookies.set('AccessToken', res.data['accessToken'], { expires: 7 })
         Cookies.set('RefreshToken', res.data['refreshToken'], { expires: 30 })
+        Cookies.set('Role', res.data['userRole'], { expires: 30 })
+        Cookies.set('UserId', res.data['userId'], { expires: 30 })
         console.log(Cookies)
+
+        const userRole = res.data['userRole']
+        if (userRole === 'supplier') {
+          router.push('supplierPortal/supplierTable')
+        } else if (userRole === 'retailer') {
+          router.push('/home')
+        }
       })
       .catch(err => {
         console.log('error in request', err)
+        setError('Incorrect username or password')
         console.log()
       })
   }
@@ -87,6 +101,9 @@ const LoginForm: React.FC = () => {
         />
         {errors.password && (
           <span className="text-red-500">{errors.password.message}</span>
+        )}
+        {error && (
+          <span className="text-red-500 mb-2">{error}</span> // Display the error message
         )}
       </div>
       <button
